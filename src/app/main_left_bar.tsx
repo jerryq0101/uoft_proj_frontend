@@ -13,15 +13,37 @@ import {
   } from '@chakra-ui/react'
 import { Button, ButtonGroup } from '@chakra-ui/react'
 import { Switch } from '@chakra-ui/react'
+import {
+    AutoComplete,
+    AutoCompleteInput,
+    AutoCompleteItem,
+    AutoCompleteList,
+    AutoCompleteTag,
+  } from "@choc-ui/chakra-autocomplete";
 
 import { get_tree_data } from '@/app/server-actions/actions'
 
+
+/**
+ * MainLeftBar component
+ * 
+ * This component renders a sidebar with course selection functionality.
+ * It allows users to add completed and desired courses, and build a course tree.
+ * 
+ * @param {Function} props.setTreeData - Function to update the tree data in the parent component after fetching it from the server
+ * @returns {JSX.Element} The rendered MainLeftBar component
+ */
+
 export default function MainLeftBar({setTreeData}: {setTreeData: any}){
+    const course_list = ["CSC108H1", "CSC311H1", "CSC165H1", "CSC110H1", "CSC240H1", "CSC236H1", "CSC263H1"]
     const [isOpen, setIsOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const [completed_courses, setCompletedCourses] = useState<{ name: string; color: string }[]>([])
     const [desired_courses, setDesiredCourses] = useState<{ name: string; color: string }[]>([])
+
+    const [completedInputValue, setCompletedInputValue] = useState('');
+    const [desiredInputValue, setDesiredInputValue] = useState('');
 
     useEffect(() => {
         const handleResize = () => {
@@ -34,42 +56,62 @@ export default function MainLeftBar({setTreeData}: {setTreeData: any}){
 
     
 
-    // function add_completed_course(course: string) {
-    //     // Define an array of color words
-    //     const colorWords = ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink', 'teal', 'cyan', 'indigo'];
+    function add_completed_course(course: string) {
+        // Define an array of color words
+        const colorWords = ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink', 'teal', 'cyan', 'indigo'];
         
-    //     // Generate a random color word for the course
-    //     const randomColor = colorWords[Math.floor(Math.random() * colorWords.length)];
+        // Generate a random color word for the course
+        const randomColor = colorWords[Math.floor(Math.random() * colorWords.length)];
         
-    //     const course_with_color = {
-    //         name: course,
-    //         color: randomColor
-    //     }
-    //     // Add the course with its random color word
-    //     setCompletedCourses([...completed_courses, course_with_color]);
-    // }
+        const course_with_color = {
+            name: course,
+            color: randomColor
+        }
+        // Add the course with its random color word
+        setCompletedCourses([...completed_courses, course_with_color]);
+    }
 
-    // function add_desired_course(course: string) {
-    //     // Define an array of color words
-    //     const colorWords = ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink', 'teal', 'cyan', 'indigo'];
+    function add_desired_course(course: string) {
+        // Define an array of color words
+        const colorWords = ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink', 'teal', 'cyan', 'indigo'];
         
-    //     // Generate a random color word for the course
-    //     const randomColor = colorWords[Math.floor(Math.random() * colorWords.length)];
+        // Generate a random color word for the course
+        const randomColor = colorWords[Math.floor(Math.random() * colorWords.length)];
         
-    //     const course_with_color = {
-    //         name: course,
-    //         color: randomColor
-    //     }
-    //     // Add the course with its random color word
-    //     setCompletedCourses([...completed_courses, course_with_color]);
-    // }
-
+        const course_with_color = {
+            name: course,
+            color: randomColor
+        }
+        // Add the course with its random color word
+        setDesiredCourses([...desired_courses, course_with_color]);
+    }
+    const handleCompletedCourseSelect = (course: string) => {
+        add_completed_course(course);
+        setCompletedInputValue('');
+    };
     
+    const handleDesiredCourseSelect = (course: string) => {
+        add_desired_course(course);
+        setDesiredInputValue('');
+    };
+
+
+    // -----–––––––––––------ TREE FETCHING LOGIC -----–––––––––––------
+    /**
+     * Gets data from the server using the get_tree_data server action
+     * @returns { course_trees: [...]}
+     */
     async function get_data() {
         const data = await get_tree_data()
         return data
     }
-      
+
+    /**
+     * Handles the button click event
+     * sets course tree data in the parent component for the tree visualization to take place
+     * 
+     * @returns {void}
+     */
     async function handle_btn_click() {
         // Takes in data from the form
         console.log("CLICKED")
@@ -94,42 +136,72 @@ export default function MainLeftBar({setTreeData}: {setTreeData: any}){
             </button>
             <aside className={`z-50 fixed left-0 top-0 w-[400px] bg-gray-100 h-screen p-4 border-r border-gray-200 overflow-y-auto transition-transform duration-500 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
                 <div className="py-14 px-10 items-center">
-                    <div className="flex flex-col h-full gap-14">
+                    <div className="flex flex-col h-full gap-10">
                         <h1>Simple (Full) Course Tree Visualizer</h1>
                         {/* Course collection field */}
                         <div className="flex flex-col gap-2">
                             <p>Add Completed Courses</p>
-                            <Input placeholder='CSC108H1' size='sm' />
-                            {/* Some fucking searching mechanism for the courses and a drop down and people click and then it will be added as a tag below via a list*/}
-                            <div>
-                                <Tag
-                                    size={"md"}
-                                    key={"md"}
-                                    variant='solid'
-                                    // Do a fucking random color generator here
-                                    colorScheme='green'
+                            <AutoComplete openOnFocus={false} onChange={(option) => handleCompletedCourseSelect(option)}>
+                                <AutoCompleteInput value={completedInputValue} onChange={(e) => setCompletedInputValue(e.target.value)} size='sm' placeholder="CSC108H1" />
+                                <AutoCompleteList>
+                                    {course_list.map((course, cid) => (
+                                        <AutoCompleteItem
+                                            key={`option-${cid}`}
+                                            value={course}
+                                            textTransform="capitalize"
+                                        >
+                                            {course}
+                                        </AutoCompleteItem>
+                                    ))}
+                                </AutoCompleteList>
+                            </AutoComplete>
+                            <div className="flex flex-row flex-wrap gap-2">
+                                {completed_courses.map((course, index) => (
+                                    <Tag
+                                        size={"md"}
+                                        key={index}
+                                        variant='solid'
+                                        colorScheme={course.color}
                                     >
-                                    <TagLabel>CSC108</TagLabel>
-                                    <TagCloseButton />
-                                </Tag>
+                                        <TagLabel>{course.name}</TagLabel>
+                                        <TagCloseButton onClick={() => {
+                                            setCompletedCourses(completed_courses.filter((_, i) => i !== index));
+                                        }} />
+                                    </Tag>
+                                ))}
                             </div>
                         </div>
 
                         <div className="flex flex-col gap-2">
                             <p>Add Desired Courses</p>
-                            <Input placeholder='CSC311H1' size='sm' />
-                            {/* Some fucking searching mechanism for the courses and a drop down and people click and then it will be added as a tag below via a list*/}
-                            <div>
-                                <Tag
-                                    size={"md"}
-                                    key={"md"}
-                                    variant='solid'
-                                    // Do a fucking random color generator here
-                                    colorScheme='yellow'
+                            <AutoComplete openOnFocus={false} onChange={(option) => handleDesiredCourseSelect(option)}>
+                                <AutoCompleteInput value={desiredInputValue} onChange={(e) => setDesiredInputValue(e.target.value)} size='sm' placeholder="MAT309H1" />
+                                <AutoCompleteList>
+                                    {course_list.map((course, cid) => (
+                                        <AutoCompleteItem
+                                            key={`option-${cid}`}
+                                            value={course}
+                                            textTransform="capitalize"
+                                        >
+                                            {course}
+                                        </AutoCompleteItem>
+                                    ))}
+                                </AutoCompleteList>
+                            </AutoComplete>
+                            <div className="flex flex-row flex-wrap gap-2">
+                                {desired_courses.map((course, index) => (
+                                    <Tag
+                                        size={"md"}
+                                        key={index}
+                                        variant='solid'
+                                        colorScheme={course.color}
                                     >
-                                    <TagLabel>CSC311H1</TagLabel>
-                                    <TagCloseButton />
-                                </Tag>
+                                        <TagLabel>{course.name}</TagLabel>
+                                        <TagCloseButton onClick={() => {
+                                            setDesiredCourses(desired_courses.filter((_, i) => i !== index));
+                                        }} />
+                                    </Tag>
+                                ))}
                             </div>
                         </div>
 
