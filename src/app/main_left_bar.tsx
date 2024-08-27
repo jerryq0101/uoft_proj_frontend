@@ -34,8 +34,8 @@ import { get_tree_data } from '@/app/server-actions/actions'
  * @returns {JSX.Element} The rendered MainLeftBar component
  */
 
-export default function MainLeftBar({setTreeData}: {setTreeData: any}){
-    const course_list = ["MAT135H1", "MAT136H1", "MAT309H1", "CSC108H1", "CSC311H1", "CSC165H1", "CSC110H1", "CSC240H1", "CSC236H1", "CSC263H1"]
+export default function MainLeftBar({setTreeData, showCompleted, setShowCompleted}: {setTreeData: any; showCompleted: any; setShowCompleted: any}) {
+    const course_list = ["MAT135H1", "MAT136H1", "MAT309H1", "CSC108H1", "CSC311H1", "CSC165H1", "CSC110Y1", "CSC240H1", "CSC236H1", "CSC263H1"]
     const [isOpen, setIsOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
@@ -105,6 +105,7 @@ export default function MainLeftBar({setTreeData}: {setTreeData: any}){
     async function get_data() {
         const completedCourseNames = completed_courses.map(course => course.name);
         const desiredCourseNames = desired_courses.map(course => course.name);
+        console.log("GET Data call")
         const data = await get_tree_data(completedCourseNames, desiredCourseNames);
         return data
     }
@@ -226,7 +227,7 @@ export default function MainLeftBar({setTreeData}: {setTreeData: any}){
                                     <p>Show Prerequisites</p>
                                 </div>
                                 <div className="flex flex-row gap-2">
-                                    <Switch size='sm' />
+                                    <Switch size='sm' value={showCompleted} onChange={() => setShowCompleted(!showCompleted)} />
                                     <p>Show Completion</p>
                                 </div>
                             </div>

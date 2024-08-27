@@ -5,13 +5,11 @@ import Image from "next/image";
 import MainLeftBar from "./main_left_bar";
 import BottomBar from "./bottom_bar"; // Add this import
 import { Tree, TreeNode } from 'react-organizational-chart';
+import styled from 'styled-components';
 
 export default function Home() {
-  const [loading, setLoading] = useState(false)
   const [treeData, setTreeData] = useState<{course_trees: []}>();
-
-  // Hold all the data here
-  // Process data
+  const [showCompleted, setShowCompleted] = useState(false)
 
   useEffect(() => {
     console.log("RECEIVED DATA!", treeData)
@@ -19,6 +17,7 @@ export default function Home() {
 
   function convert_data_to_jsx(data: { course_trees: [] }) {
     const arr = data.course_trees
+
 
     function process_node(node: { 
       label: string,
@@ -34,10 +33,21 @@ export default function Home() {
 
       if (node.label == "Course") {
         const code = node.code
-        label = <div>{code}</div>
+        const StyledNode = styled.div`
+          padding: 5px;
+          border-radius: 5px;
+          display: inline-block;
+          border: 1px solid #047857;
+        `;
+        // TailwindCSS does not work with TreeNode
+        label = <StyledNode>
+            {code} {showCompleted && node.completed && "✅"}
+          </StyledNode>
       } 
       else {
-        label = <div>{node.label}</div>
+        label = <div style={{padding: "3px"}}>
+            {node.label} {showCompleted && node.marked && "👍"}
+        </div>
       }
       
       // Add children and recurse
@@ -63,9 +73,8 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <MainLeftBar setTreeData={setTreeData}/>
+      <MainLeftBar setTreeData={setTreeData} showCompleted={showCompleted} setShowCompleted={setShowCompleted}/>
       <div>
-
         {treeData?.course_trees && 
           <Tree
             lineWidth={'2px'}
