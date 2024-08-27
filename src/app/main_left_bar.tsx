@@ -35,7 +35,7 @@ import { get_tree_data } from '@/app/server-actions/actions'
  */
 
 export default function MainLeftBar({setTreeData}: {setTreeData: any}){
-    const course_list = ["CSC108H1", "CSC311H1", "CSC165H1", "CSC110H1", "CSC240H1", "CSC236H1", "CSC263H1"]
+    const course_list = ["MAT135H1", "MAT136H1", "MAT309H1", "CSC108H1", "CSC311H1", "CSC165H1", "CSC110H1", "CSC240H1", "CSC236H1", "CSC263H1"]
     const [isOpen, setIsOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
@@ -85,11 +85,12 @@ export default function MainLeftBar({setTreeData}: {setTreeData: any}){
         // Add the course with its random color word
         setDesiredCourses([...desired_courses, course_with_color]);
     }
+
     const handleCompletedCourseSelect = (course: string) => {
         add_completed_course(course);
         setCompletedInputValue('');
     };
-    
+
     const handleDesiredCourseSelect = (course: string) => {
         add_desired_course(course);
         setDesiredInputValue('');
@@ -102,7 +103,9 @@ export default function MainLeftBar({setTreeData}: {setTreeData: any}){
      * @returns { course_trees: [...]}
      */
     async function get_data() {
-        const data = await get_tree_data()
+        const completedCourseNames = completed_courses.map(course => course.name);
+        const desiredCourseNames = desired_courses.map(course => course.name);
+        const data = await get_tree_data(completedCourseNames, desiredCourseNames);
         return data
     }
 

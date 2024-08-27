@@ -1,14 +1,19 @@
 "use server"
 
-export async function get_tree_data() {
+
+// export function UserProfile({ userId }: { userId: string }) {
+//     const updateUserWithId = updateUser.bind(null, userId)
+
+export async function get_tree_data(completed_courses: string[], desired_courses: string[]) {
+
     const res = await fetch("http://127.0.0.1:5000/course/", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            "completed_courses": ["MAT135H1"],
-            "desired_courses": ["MAT309H1"]
+            "completed_courses": completed_courses,
+            "desired_courses": desired_courses
         }),
     })
 
