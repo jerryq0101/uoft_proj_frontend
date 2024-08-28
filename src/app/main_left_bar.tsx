@@ -34,7 +34,7 @@ import { get_tree_data } from '@/app/server-actions/actions'
  * @returns {JSX.Element} The rendered MainLeftBar component
  */
 
-export default function MainLeftBar({setTreeData, showCompleted, setShowCompleted}: {setTreeData: any; showCompleted: any; setShowCompleted: any}) {
+export default function MainLeftBar({setTreeData, showCompleted, setShowCompleted, setLeftBarIsOpen}: {setTreeData: any; showCompleted: any; setShowCompleted: any; setLeftBarIsOpen: any}) {
     const course_list = ["MAT135H1", "MAT136H1", "MAT309H1", "CSC108H1", "CSC311H1", "CSC165H1", "CSC110Y1", "CSC240H1", "CSC236H1", "CSC263H1"]
     const [isOpen, setIsOpen] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -48,6 +48,7 @@ export default function MainLeftBar({setTreeData, showCompleted, setShowComplete
     useEffect(() => {
         const handleResize = () => {
             setIsOpen(window.innerWidth > 768);
+            setLeftBarIsOpen(window.innerWidth > 768);
         };
         handleResize();
         window.addEventListener('resize', handleResize);

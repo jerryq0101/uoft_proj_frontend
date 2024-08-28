@@ -1,6 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+
 import Image from "next/image";
 import MainLeftBar from "./main_left_bar";
 import BottomBar from "./bottom_bar"; // Add this import
@@ -11,9 +13,18 @@ export default function Home() {
   const [treeData, setTreeData] = useState<{course_trees: []}>();
   const [showCompleted, setShowCompleted] = useState(false)
 
+  // This can be set to true when the left bar is open by the component itself
+  const [leftBarIsOpen, setLeftBarIsOpen] = useState(false)
+
   useEffect(() => {
     console.log("RECEIVED DATA!", treeData)
   }, [treeData])
+
+
+
+  useEffect(() => {
+    console.log("LEFT BAR IS OPEN!", leftBarIsOpen)
+  }, [leftBarIsOpen])
 
   function convert_data_to_jsx(data: { course_trees: [] }) {
     const arr = data.course_trees
@@ -62,7 +73,6 @@ export default function Home() {
       </TreeNode>
     }
 
-
     let list_of_elements = []
     for (const node of arr) {
       list_of_elements.push(process_node(node))
@@ -72,21 +82,43 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <MainLeftBar setTreeData={setTreeData} showCompleted={showCompleted} setShowCompleted={setShowCompleted}/>
-      <div>
-        {treeData?.course_trees && 
-          <Tree
-            lineWidth={'2px'}
-            lineColor={'green'}
-            lineBorderRadius={'10px'}
-            label={<div>Root</div>}
-          >
-              {convert_data_to_jsx(treeData)}
-          </Tree>
-        }
-        
-        <BottomBar /> {/* Add this line */}
+    <main className="flex min-h-screen flex-col items-center justify-between bg-">
+      <MainLeftBar setTreeData={setTreeData} setLeftBarIsOpen={setLeftBarIsOpen} showCompleted={showCompleted} setShowCompleted={setShowCompleted}/>
+      
+      {/* Make this component align from the right of the screen */}
+      <div className="w-full flex flex-grow flex-col items-end bg-blue-500">
+          <div className={`flex flex-col flex-grow h-full ${leftBarIsOpen ? "w-[calc(100%-400px)]" : "w-full"}`}>
+            <TransformWrapper
+              limitToBounds={false}
+              minScale={0.5}
+              maxScale={5}
+              initialScale={1}
+            >
+              <TransformComponent
+                wrapperStyle={{
+                  width: '100%',
+                  height: '100%',
+                  flexGrow: 1,
+                }}
+                contentStyle={{
+                  width: '100%',
+                  height: '100%',
+                }}
+              >
+                <Tree
+                  lineWidth={'2px'}
+                  lineColor={'green'}
+                  lineBorderRadius={'10px'}
+                  label={<div>Root</div>}
+                >
+                  {treeData && convert_data_to_jsx(treeData)}
+                </Tree>
+              </TransformComponent>
+            </TransformWrapper>
+            
+
+          <BottomBar />
+          </div>
       </div>
     </main>
 
