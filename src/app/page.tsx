@@ -21,7 +21,6 @@ export default function Home() {
   }, [treeData])
 
 
-
   useEffect(() => {
     console.log("LEFT BAR IS OPEN!", leftBarIsOpen)
   }, [leftBarIsOpen])
@@ -88,34 +87,15 @@ export default function Home() {
       {/* Make this component align from the right of the screen */}
       <div className="w-full flex flex-grow flex-col items-end bg-blue-500">
           <div className={`flex flex-col flex-grow h-full ${leftBarIsOpen ? "w-[calc(100%-400px)]" : "w-full"}`}>
-            <TransformWrapper
-              limitToBounds={false}
-              minScale={0.5}
-              maxScale={5}
-              initialScale={1}
-            >
-              <TransformComponent
-                wrapperStyle={{
-                  width: '100%',
-                  height: '100%',
-                  flexGrow: 1,
-                }}
-                contentStyle={{
-                  width: '100%',
-                  height: '100%',
-                }}
+
+              <Tree
+                lineWidth={'2px'}
+                lineColor={'green'}
+                lineBorderRadius={'10px'}
+                label={<div>Root</div>}
               >
-                <Tree
-                  lineWidth={'2px'}
-                  lineColor={'green'}
-                  lineBorderRadius={'10px'}
-                  label={<div>Root</div>}
-                >
-                  {treeData && convert_data_to_jsx(treeData)}
-                </Tree>
-              </TransformComponent>
-            </TransformWrapper>
-            
+                {treeData && convert_data_to_jsx(treeData)}
+              </Tree>
 
           <BottomBar />
           </div>

@@ -36,7 +36,6 @@ import { get_tree_data } from '@/app/server-actions/actions'
 
 export default function MainLeftBar({setTreeData, showCompleted, setShowCompleted, setLeftBarIsOpen}: {setTreeData: any; showCompleted: any; setShowCompleted: any; setLeftBarIsOpen: any}) {
     const course_list = ["MAT135H1", "MAT136H1", "MAT309H1", "CSC108H1", "CSC311H1", "CSC165H1", "CSC110Y1", "CSC240H1", "CSC236H1", "CSC263H1"]
-    const [isOpen, setIsOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const [completed_courses, setCompletedCourses] = useState<{ name: string; color: string }[]>([])
@@ -45,15 +44,31 @@ export default function MainLeftBar({setTreeData, showCompleted, setShowComplete
     const [completedInputValue, setCompletedInputValue] = useState('');
     const [desiredInputValue, setDesiredInputValue] = useState('');
 
+    const [isOpen, setIsOpen] = useState(false);
+
+    useEffect(() => {
+        setIsOpen(window.innerWidth > 768);
+        setLeftBarIsOpen(window.innerWidth > 768);
+    }, [])
+
     useEffect(() => {
         const handleResize = () => {
-            setIsOpen(window.innerWidth > 768);
-            setLeftBarIsOpen(window.innerWidth > 768);
+            const newIsMobile = window.innerWidth <= 768;
+            if (newIsMobile) {
+                console.log("HANDLE RESIZE TRIGGERED")
+                setIsOpen(false);
+                setLeftBarIsOpen(false);
+            }
         };
-        handleResize();
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+    const toggleSidebar = () => {
+        console.log("TOGGLE SIDEBAR TRIGGERED")
+        setIsOpen(!isOpen);
+        setLeftBarIsOpen(!isOpen);
+    };
 
     
 
@@ -134,12 +149,12 @@ export default function MainLeftBar({setTreeData, showCompleted, setShowComplete
     return (
         <>
             <button 
-                className="md:hidden fixed top-4 left-4 z-20 p-2 bg-gray-200 rounded"
-                onClick={() => setIsOpen(!isOpen)}
+                className="fixed top-4 left-4 z-50 p-2 bg-gray-200 rounded"
+                onClick={toggleSidebar}
             >
                 ☰
             </button>
-            <aside className={`z-50 fixed left-0 top-0 w-[400px] bg-gray-100 h-screen p-4 border-r border-gray-200 overflow-y-auto transition-transform duration-500 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
+            <aside className={`z-49 fixed left-0 top-0 w-[400px]  bg-gray-100 h-screen p-4 border-r border-gray-200 overflow-y-auto transition-transform duration-500 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
                 <div className="py-14 px-10 items-center">
                     <div className="flex flex-col h-full gap-10">
                         <h1>Simple (Full) Course Tree Visualizer</h1>
