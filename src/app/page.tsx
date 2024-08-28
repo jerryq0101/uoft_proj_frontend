@@ -6,6 +6,7 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Image from "next/image";
 import MainLeftBar from "./main_left_bar";
 import BottomBar from "./bottom_bar"; // Add this import
+import BottomBar2 from "./bottom_bar_2"; // Add this import
 import { Tree, TreeNode } from 'react-organizational-chart';
 import styled from 'styled-components';
 
@@ -15,6 +16,7 @@ export default function Home() {
 
   // This can be set to true when the left bar is open by the component itself
   const [leftBarIsOpen, setLeftBarIsOpen] = useState(false)
+
 
   useEffect(() => {
     console.log("RECEIVED DATA!", treeData)
@@ -85,19 +87,22 @@ export default function Home() {
       <MainLeftBar setTreeData={setTreeData} setLeftBarIsOpen={setLeftBarIsOpen} showCompleted={showCompleted} setShowCompleted={setShowCompleted}/>
       
       {/* Make this component align from the right of the screen */}
-      <div className="w-full flex flex-grow flex-col items-end bg-blue-500">
-          <div className={`flex flex-col flex-grow h-full ${leftBarIsOpen ? "w-[calc(100%-400px)]" : "w-full"}`}>
+      <div className="w-full flex flex-grow flex-col items-end ">
+          <div className={`flex flex-col flex-grow h-full pb-12 ${leftBarIsOpen ? "w-[calc(100%-400px)]" : "w-full"}`}>
 
-              <Tree
-                lineWidth={'2px'}
-                lineColor={'green'}
-                lineBorderRadius={'10px'}
-                label={<div>Root</div>}
-              >
-                {treeData && convert_data_to_jsx(treeData)}
-              </Tree>
+              <div className="z-10">
+                <Tree
+                  lineWidth={'2px'}
+                  lineColor={'green'}
+                  lineBorderRadius={'10px'}
+                  label={<div>Root</div>}
+                >
+                  {treeData && convert_data_to_jsx(treeData)}
+                </Tree>
+              </div>
 
-          <BottomBar />
+          <BottomBar isLeftBarOpen={leftBarIsOpen} />
+          <BottomBar2 isLeftBarOpen={leftBarIsOpen} />
           </div>
       </div>
     </main>

@@ -2,21 +2,21 @@
 import { useState } from 'react';
 import { Select } from '@chakra-ui/react'
 
-const BottomBar = ({isLeftBarOpen}: {isLeftBarOpen: boolean}) => {
+const BottomBar2 = ({isLeftBarOpen}: {isLeftBarOpen: boolean}) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className={`z-30 shadow-md fixed rounded-t-md bottom-0 w-[445px] transition-all ease-in-out duration-400 ${isLeftBarOpen ? 'left-[420px]' : 'left-[20px]'} right-0 bg-white transition-all duration-300 ${isExpanded ? 'h-[689px]' : 'h-12'}`}>
+    <div className={`z-30 shadow-md fixed rounded-t-md bottom-0 w-[445px] transition-all ease-in-out duration-400 ${isLeftBarOpen ? 'left-[885px]' : 'left-[485px]'} right-0 bg-white transition-all duration-300 ${isExpanded ? 'h-[689px]' : 'h-12'}`}>
       <button 
         className="w-full h-12 flex items-center justify-between px-6"
         onClick={() => setIsExpanded(!isExpanded)}
       >
-        <span>Focus Requirements</span>
+        <span>Degree Requirements</span>
         <span>{isExpanded ? '⬇️' : '⬆️'}</span>
       </button>
       {isExpanded && (
         <div className="p-4 h-[calc(100%-3rem)] overflow-y-auto">
-          <Select size="sm" placeholder='Select CS Focus'>
+          <Select size="sm" placeholder='Select Program'>
             <option value='option1'>Option 1</option>
             <option value='option2'>Option 2</option>
             <option value='option3'>Option 3</option>
@@ -70,4 +70,4 @@ const BottomBar = ({isLeftBarOpen}: {isLeftBarOpen: boolean}) => {
   );
 };
 
-export default BottomBar;
+export default BottomBar2;
