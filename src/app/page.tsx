@@ -11,7 +11,13 @@ import { Tree, TreeNode } from 'react-organizational-chart';
 import styled from 'styled-components';
 
 export default function Home() {
-  const [treeData, setTreeData] = useState<{course_trees: []}>();
+  const StyledNode = styled.div`
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block;
+    border: 1px solid #047857;
+  `;
+  const [treeData, setTreeData] = useState<{course_trees: any[]}>();
   const [showCompleted, setShowCompleted] = useState(false)
 
   // This can be set to true when the left bar is open by the component itself
@@ -27,8 +33,47 @@ export default function Home() {
     console.log("LEFT BAR IS OPEN!", leftBarIsOpen)
   }, [leftBarIsOpen])
 
-  function convert_data_to_jsx(data: { course_trees: [] }) {
+  function convert_data_to_jsx(data: { course_trees: any[] }) {
     const arr = data.course_trees
+
+    let list_of_elements = []
+    // to separate out the first node from the rest of the nodes
+    if (arr && arr.length > 0 ) {
+      for (let i = 0; i < arr.length; i++) {
+        const {label, marked, completed, code, children} = arr[i]
+        if (children.length == 0) {
+            list_of_elements.push(<Tree
+                  lineWidth={'2px'}
+                  lineColor={'green'}
+                  lineBorderRadius={'10px'}
+                  label={<div>{code}</div>}
+                >
+                  <TreeNode
+                    label={<StyledNode>No Prerequisites</StyledNode>}
+                  />
+                </Tree>)
+        } else {
+          const first_children = children[0]
+      
+          // construct the first node
+          list_of_elements.push(<Tree
+            lineWidth={'2px'}
+            lineColor={'green'}
+            lineBorderRadius={'10px'}
+            label={<div>
+              {code} {showCompleted && completed && "✅"}
+              </div>}
+          >
+            {process_node(first_children)}
+          </Tree>) 
+        }
+
+      }
+      return list_of_elements
+      
+    } else {
+      return []
+    }
 
 
     function process_node(node: { 
@@ -40,17 +85,11 @@ export default function Home() {
       children: []
     }) {
 
-
       let label: any
 
       if (node.label == "Course") {
         const code = node.code
-        const StyledNode = styled.div`
-          padding: 5px;
-          border-radius: 5px;
-          display: inline-block;
-          border: 1px solid #047857;
-        `;
+
         // TailwindCSS does not work with TreeNode
         label = <StyledNode>
             {code} {showCompleted && node.completed && "✅"}
@@ -74,11 +113,11 @@ export default function Home() {
       </TreeNode>
     }
 
-    let list_of_elements = []
-    for (const node of arr) {
-      list_of_elements.push(process_node(node))
-    }
-    return list_of_elements
+    // let list_of_elements = []
+    // for (const node of arr) {
+    //   list_of_elements.push(process_node(node))
+    // }
+    // return list_of_elements
 
   }
 
@@ -90,15 +129,8 @@ export default function Home() {
       <div className="w-full flex flex-grow flex-col items-end ">
           <div className={`flex flex-col flex-grow h-full pb-12 ${leftBarIsOpen ? "w-[calc(100%-400px)]" : "w-full"}`}>
 
-              <div className="z-10">
-                <Tree
-                  lineWidth={'2px'}
-                  lineColor={'green'}
-                  lineBorderRadius={'10px'}
-                  label={<div></div>}
-                >
+              <div className="z-10 pt-5">
                   {treeData && convert_data_to_jsx(treeData)}
-                </Tree>
               </div>
 
           <BottomBar isLeftBarOpen={leftBarIsOpen} />

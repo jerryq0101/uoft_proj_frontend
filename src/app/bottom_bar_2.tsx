@@ -6,7 +6,7 @@ const BottomBar2 = ({isLeftBarOpen}: {isLeftBarOpen: boolean}) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className={`z-30 shadow-md fixed rounded-t-md bottom-0 w-[445px] transition-all ease-in-out duration-400 ${isLeftBarOpen ? 'left-[885px]' : 'left-[485px]'} right-0 bg-white transition-all duration-300 ${isExpanded ? 'h-[689px]' : 'h-12'}`}>
+    <div className={`z-30 shadow-lg fixed rounded-t-md bottom-0 w-[445px] transition-all ease-in-out duration-400 ${isLeftBarOpen ? 'left-[885px]' : 'left-[485px]'} right-0 bg-white transition-all duration-300 ${isExpanded ? 'h-[689px]' : 'h-12'}`}>
       <button 
         className="w-full h-12 flex items-center justify-between px-6"
         onClick={() => setIsExpanded(!isExpanded)}

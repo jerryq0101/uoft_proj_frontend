@@ -185,7 +185,7 @@ export default function MainLeftBar({setTreeData, showCompleted, setShowComplete
                                         colorScheme={course.color}
                                     >
                                         <TagLabel>{course.name}</TagLabel>
-                                        <TagCloseButton onClick={() => {
+                                        <TagCloseButton isDisabled={loading} onClick={() => {
                                             setCompletedCourses(completed_courses.filter((_, i) => i !== index));
                                         }} />
                                     </Tag>
