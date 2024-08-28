@@ -74,7 +74,7 @@ export default function MainLeftBar({setTreeData, showCompleted, setShowComplete
 
     function add_completed_course(course: string) {
         // Define an array of color words
-        const colorWords = ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink', 'teal', 'cyan', 'indigo'];
+        const colorWords = ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink', 'teal', 'cyan'];
         
         // Generate a random color word for the course
         const randomColor = colorWords[Math.floor(Math.random() * colorWords.length)];
@@ -89,11 +89,12 @@ export default function MainLeftBar({setTreeData, showCompleted, setShowComplete
 
     function add_desired_course(course: string) {
         // Define an array of color words
-        const colorWords = ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink', 'teal', 'cyan', 'indigo'];
+        const colorWords = ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink', 'teal', 'cyan'];
         
         // Generate a random color word for the course
         const randomColor = colorWords[Math.floor(Math.random() * colorWords.length)];
         
+        console.log(course, randomColor)
         const course_with_color = {
             name: course,
             color: randomColor

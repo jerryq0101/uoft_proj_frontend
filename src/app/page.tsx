@@ -95,7 +95,7 @@ export default function Home() {
                   lineWidth={'2px'}
                   lineColor={'green'}
                   lineBorderRadius={'10px'}
-                  label={<div>Root</div>}
+                  label={<div></div>}
                 >
                   {treeData && convert_data_to_jsx(treeData)}
                 </Tree>
