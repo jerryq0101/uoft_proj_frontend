@@ -40,7 +40,7 @@ export default function Home() {
     // to separate out the first node from the rest of the nodes
     if (arr && arr.length > 0 ) {
       for (let i = 0; i < arr.length; i++) {
-        const {label, marked, completed, code, children} = arr[i]
+        const {label, marked, ready_to_take, completed, code, children} = arr[i]
         if (children.length == 0) {
             list_of_elements.push(<Tree
                   lineWidth={'2px'}
@@ -54,14 +54,22 @@ export default function Home() {
                 </Tree>)
         } else {
           const first_children = children[0]
-      
+          
+          let status = ""
+          if (ready_to_take) {
+            status = "⬅️"
+          } else if (completed) {
+            status = "✅"
+          } else if (marked) {
+            status = "👍"
+          }
           // construct the first node
           list_of_elements.push(<Tree
             lineWidth={'2px'}
             lineColor={'green'}
             lineBorderRadius={'10px'}
             label={<div>
-              {code} {showCompleted && completed && "✅"}
+              {code} {showCompleted && status}
               </div>}
           >
             {process_node(first_children)}
@@ -78,7 +86,8 @@ export default function Home() {
 
     function process_node(node: { 
       label: string,
-      marked: false,
+      marked: boolean,
+      ready_to_take: boolean,
       completed: false,
       code: string,
       full_name: null,
@@ -86,18 +95,26 @@ export default function Home() {
     }) {
 
       let label: any
+      let status = ""
+      if (node.ready_to_take) {
+        status = "⬅️"
+      } else if (node.completed) {
+        status = "✅"
+      } else if (node.marked) {
+        status = "👍"
+      }
 
       if (node.label == "Course") {
         const code = node.code
 
         // TailwindCSS does not work with TreeNode
         label = <StyledNode>
-            {code} {showCompleted && node.completed && "✅"}
+            {code} {showCompleted && status}
           </StyledNode>
       } 
       else {
         label = <div style={{padding: "3px"}}>
-            {node.label} {showCompleted && node.marked && "👍"}
+            {node.label} {showCompleted && status}
         </div>
       }
       
