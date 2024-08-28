@@ -21,7 +21,7 @@ import {
     AutoCompleteTag,
   } from "@choc-ui/chakra-autocomplete";
 
-import { get_tree_data } from '@/app/server-actions/actions'
+import { get_full_tree_data, get_simple_tree_data } from '@/app/server-actions/actions'
 
 
 /**
@@ -43,6 +43,8 @@ export default function MainLeftBar({setTreeData, showCompleted, setShowComplete
 
     const [completedInputValue, setCompletedInputValue] = useState('');
     const [desiredInputValue, setDesiredInputValue] = useState('');
+
+    const [create_with_prerequisites, setCreateWithPrerequisites] = useState(false)
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -123,7 +125,15 @@ export default function MainLeftBar({setTreeData, showCompleted, setShowComplete
         const completedCourseNames = completed_courses.map(course => course.name);
         const desiredCourseNames = desired_courses.map(course => course.name);
         console.log("GET Data call")
-        const data = await get_tree_data(completedCourseNames, desiredCourseNames);
+        const data = await get_full_tree_data(completedCourseNames, desiredCourseNames);
+        return data
+    }
+
+    async function get_simple_data() {
+        const completedCourseNames = completed_courses.map(course => course.name);
+        const desiredCourseNames = desired_courses.map(course => course.name);
+        console.log("GET Data call")
+        const data = await get_simple_tree_data(completedCourseNames, desiredCourseNames);
         return data
     }
 
@@ -133,9 +143,9 @@ export default function MainLeftBar({setTreeData, showCompleted, setShowComplete
      * 
      * @returns {void}
      */
-    async function handle_btn_click() {
+    async function handle_full_tree_btn_click() {
         // Takes in data from the form
-        console.log("CLICKED")
+        console.log("CLICKED full tree")
 
         setLoading(true)
 
@@ -146,6 +156,20 @@ export default function MainLeftBar({setTreeData, showCompleted, setShowComplete
 
         setLoading(false)
     }
+
+    async function handle_simple_tree_btn_click() {
+        // Takes in data from the form
+        console.log("CLICKED simple tree")
+
+        setLoading(true)
+
+        const data = await get_simple_data()
+        console.log(data)
+        setTreeData(data)
+
+        setLoading(false)
+    }
+
 
     return (
         <>
@@ -226,28 +250,44 @@ export default function MainLeftBar({setTreeData, showCompleted, setShowComplete
                             </div>
                         </div>
 
-                        <div className="flex flex-row justify-between">
-                            <Button 
-                                isLoading={loading} 
-                                onClick={() => {
-                                    handle_btn_click()
-                                }} 
-                                loadingText='O(n⁴) poop' 
-                                colorScheme='green' 
-                                variant='solid'>
-                                🌳 Build Tree
-                            </Button>
-                            <div className="flex flex-col justify-between">
-                                {/* IMPLEMENT LOGIC HERE FOR THIS SHIT */}
+                        <div className="flex flex-col gap-3">
+                            <div className="flex flex-col gap-2">
                                 <div className="flex flex-row gap-2">
-                                    <Switch size='sm' />
-                                    <p>Show Prerequisites</p>
+                                    <Switch size='sm' checked={create_with_prerequisites} onChange={() => setCreateWithPrerequisites(!create_with_prerequisites)} />
+                                    <p>Show Common Courses [not implemented]</p>
                                 </div>
+
                                 <div className="flex flex-row gap-2">
                                     <Switch size='sm' value={showCompleted} onChange={() => setShowCompleted(!showCompleted)} />
                                     <p>Show Completion</p>
                                 </div>
                             </div>
+
+                            <Button 
+                                isLoading={loading} 
+                                onClick={() => {
+                                    handle_simple_tree_btn_click()
+                                }} 
+                                loadingText='O(n) TREE BUILDING TYPE SHI' 
+                                colorScheme='green' 
+                                variant='solid'
+                                className="px-5 mr-auto"
+                            >
+                                🌳 Build Tree
+                            </Button>
+
+                            <Button 
+                                isLoading={loading}
+                                onClick={() => {
+                                    handle_full_tree_btn_click()
+                                }} 
+                                loadingText='O(n) TREE BUILDING TYPE SHI' 
+                                colorScheme='green' 
+                                variant='solid'
+                                className="px-5 mr-auto"
+                            >
+                                🌲 Build Full Tree
+                            </Button>
                         </div>
                     </div>
                 </div>
