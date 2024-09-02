@@ -35,7 +35,7 @@ import { get_full_tree_data, get_simple_tree_data } from '@/app/server-actions/a
  */
 
 export default function MainLeftBar({setTreeData, showCompleted, setShowCompleted, setLeftBarIsOpen}: {setTreeData: any; showCompleted: any; setShowCompleted: any; setLeftBarIsOpen: any}) {
-    const course_list = ["MAT135H1", "MAT136H1", "MAT309H1", "CSC108H1", "CSC311H1", "CSC165H1", "CSC110Y1", "CSC240H1", "CSC236H1", "CSC263H1"]
+    const course_list = ['CSC336H1', 'CSC148H1', 'CSC108H1', 'CSC111H1', 'CSC110Y1', 'MAT133Y1', 'MAT135H1', 'MAT136H1', 'MAT137Y1', 'MAT157Y1', 'MAT223H1', 'MAT240H1', 'MAT235Y1', 'MAT237Y1', 'MAT138H1', 'MAT246H1', 'MAT257Y1', 'MAT247H1', 'APM236H1', 'MAT221H1', 'MAT224H1', 'STA238H1', 'STA237H1', 'STA247H1', 'STA257H1', 'STA248H1', 'STA261H1', 'STA302H1', 'STA255H1', 'STA220H1', 'STA221H1', 'STA288H1', 'BIO230H1', 'BIO130H1', 'CHM135H1', 'CHM136H1', 'CHM151Y1', 'PHY131H1', 'PHY132H1', 'PHY151H1', 'PHY152H1', 'BIO255H1', 'PSY201H1', 'PSY100H1', 'COG250Y1', 'GGR270H1', 'EEB225H1', 'BIO120H1', 'ECO220Y1', 'ECO101H1', 'ECO102H1', 'ECO105Y1', 'ECO227Y1', 'ECO210H1', 'STA347H1', 'CSC401H1', 'CSC207H1', 'CSC209H1', 'CSC485H1', 'CSC320H1', 'CSC263H1', 'CSC236H1', 'CSC165H1', 'CSC240H1', 'CSC265H1', 'MAT377H1', 'CSC420H1', 'MAT194H1', 'MAT195H1', 'CSC311H1', 'CSC413H1', 'STA314H1', 'CSC412H1', 'STA414H1', 'CSC304H1', 'CSC384H1', 'CSC486H1', 'CSC324H1', 'PSY270H1', 'PHL232H1', 'PHL342H1', 'CSC318H1', 'LIN101H1', 'LIN200H1', 'CSC309H1', 'CSC428H1', 'CSC343H1', 'CSC367H1', 'CSC258H1', 'CSC369H1', 'CSC457H1', 'CSC373H1', 'CSC458H1', 'CSC368H1', 'CSC385H1', 'CSC443H1', 'CSC469H1', 'CSC488H1', 'CSC301H1', 'CSC410H1', 'CSC417H1', 'CSC317H1', 'CSC419H1', 'APM462H1', 'PHY385H1', 'PHY250H1', 'PHY224H1', 'PHY231H1', 'PHY252H1', 'PHY254H1', 'PHY256H1', 'PSL440Y1', 'PSL300H1', 'PSY290H1', 'PSY280H1', 'CSC300H1', 'CSC404H1', 'CSC303H1', 'MUS300H1', 'CIN212H1', 'CIN432H1', 'CIN105Y1', 'CIN201Y1', 'CIN301Y1', 'ENG235H1', 'ECO326H1', 'ECO200Y1', 'ECO204Y1', 'ECO206Y1', 'RSM482H1', 'SOC204H1', 'SOC100H1', 'SOC150H1', 'CSC302H1', 'CSC316H1', 'CSC454H1', 'STA313H1', 'ENV281H1', 'ENV381H1', 'IRE260H1', 'COG260H1', 'COG341H1', 'COG343H1', 'COG344H1', 'LIN232H1', 'LIN102H1', 'LIN241H1', 'JLP315H1', 'JLP374H1', 'LIN228H1', 'LIN229H1', 'PSY260H1', 'CSC436H1', 'CSC446H1', 'APM346H1', 'MAT244H1', 'MAT267H1', 'MAT351Y1', 'CSC456H1', 'CSC466H1', 'MAT334H1', 'MAT354H1', 'MAT337H1', 'MAT357H1', 'CSC308H1', 'CSC490H1', 'CSC491H1', 'CSC494H1', 'CSC495H1', 'CSC494Y1', 'CSC463H1', 'CSC310H1', 'CSC438H1', 'MAT309H1', 'CSC448H1', 'CSC473H1', 'MAT332H1', 'MAT344H1']
     const [loading, setLoading] = useState(false);
 
     const [completed_courses, setCompletedCourses] = useState<{ name: string; color: string }[]>([])
@@ -268,7 +268,7 @@ export default function MainLeftBar({setTreeData, showCompleted, setShowComplete
                                 onClick={() => {
                                     handle_simple_tree_btn_click()
                                 }} 
-                                loadingText='O(n) TREE BUILDING TYPE SHI' 
+                                loadingText='Building Tree' 
                                 colorScheme='green' 
                                 variant='solid'
                                 className="px-5 mr-auto"
@@ -281,13 +281,21 @@ export default function MainLeftBar({setTreeData, showCompleted, setShowComplete
                                 onClick={() => {
                                     handle_full_tree_btn_click()
                                 }} 
-                                loadingText='O(n) TREE BUILDING TYPE SHI' 
+                                loadingText='Building Tree' 
                                 colorScheme='green' 
                                 variant='solid'
                                 className="px-5 mr-auto"
                             >
                                 🌲 Build Full Tree
                             </Button>
+                        </div>
+
+                        <div>
+                            <span className="bg-red-300">Red</span> = Not Completed
+                            <br></br>
+                            <span className="bg-green-300">Green</span> = Branch/Course Completed
+                            <br></br>
+                            <span className="bg-yellow-300">Yellow</span> = Course Ready to take given your completed courses
                         </div>
                     </div>
                 </div>

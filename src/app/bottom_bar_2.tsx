@@ -26,43 +26,60 @@ const BottomBar2 = ({isLeftBarOpen}: {isLeftBarOpen: boolean}) => {
          
                 <details>
                     <summary >Description</summary>
-                    LMAOLMAOLMAOLMAO
+                    
+                    This is a limited enrolment program. Students must have completed 4.0 credits and meet the requirements listed below to enrol.
+
+                    Completed courses (with minimum grades)
+                    The following courses with the stated minimum grades are required:
+
+                    • MAT137Y1 (63%)/ MAT157Y1 (60%)
+
+
                 </details>
 
                 <details>
-                    <summary>Enrolment Requirements</summary>
-                    LMAOLMAOLMAOLMAO
-                </details>
-
-                <details>
-                    <summary>Prerequisites</summary>
-
-                    (3.5 credits)
+                    <summary>Completion Requirements</summary>
                     <br></br>
-                    <ol className="list-decimal list-inside space-y-2">
-                        <li>CSC373H1, CSC463H1</li>
-                        <li>2.5 credits from the following:
+                    (8.5 credits)
 
-                            <ul className="list-disc list-inside text-sm space-y-2">
-                                <li>
-                                    CSC304H1, CSC310H1, CSC336H1, CSC436H1, CSC438H1/​ MAT309H1, CSC448H1, CSC473H1, MAT332H1, MAT344H1
-                                </li>  
-                                <li>
-                                    at UTM: MAT302H5
-                                </li> 
-                                <li>
-                                    graduate courses: CSC2221H, CSC2240H, CSC2401H, CSC2410H, CSC2412H, CSC2420H, CSC2421H, CSC2426H, CSC2451H, CSC2556H (Note that students must contact cs.undergrad@utoronto.ca during the course enrolment period to request permission to take a graduate course.)
-                                </li>
-                            </ul>
-                        </li>
-                        
+                    First Year:
+                    <br></br>
+                    
+                    <ol>
+                        <li>MAT137Y1 (63%)/ MAT157Y1 (60%)</li>
+                        <li>MAT223H1/​ MAT240H1 (should be taken in first year, enforced as a prerequisite for MAT237Y1)</li>
+                        <li>STA130H1</li>
                     </ol>
 
-                    <br></br>
-                    Students who complete an independent study project ( CSC494H1/​ CSC495H1) under the supervision of a faculty member from the Theory group may request to substitute one of CSC494H1/​ CSC495H1 for one of the courses in list 2 above. This request must be made directly to the department's Undergraduate Office.
-                    <br></br>
-                    Students who complete a graduate Topics course in Theory may request to count it towards the completion of list 2 above. This request must be made directly to the department's Undergraduate Office.
+                    <p>Note: STA130H1 is restricted to first-year students. If you are unable to complete STA130H1 in first year, see note below for accepted substitutions for this requirement.</p>
+
+                    <h4>To be completed before the end of Second Year:</h4>
+                    <ol start="4">
+                        <li>CSC108H1/​ CSC120H1/​ CSC148H1. A student who has completed CSC110Y1 also fulfills this program requirement.</li>
+                    </ol>
+
+                    <h4>Higher Years:</h4>
+                    <ol start="5">
+                        <li>ACT240H1, ACT245H1, ACT247H1, ACT348H1, ACT370H1</li>
+                        <li>MAT237Y1/​ MAT257Y1</li>
+                        <li>( STA257H1, STA261H1)/ ( STA237H1, STA238H1); while either pair of courses is accepted, we strongly recommend ( STA257H1, STA261H1)</li>
+                        <li>ACT451H1, ACT452H1, STA302H1</li>
+                    </ol>
+
+                    <p>STA314H1 is strongly recommended.</p>
+
+                    <h4>NOTES:</h4>
+                    <ul>
+                        <li>If you are unable to complete STA130H1 in your first year of study, this requirement must be fulfilled with one of the following 0.5 credits to fulfill your 8.5-credit program requirements: STA314H1, ACT350H1, ACT455H1, ACT460H1, ACT466H1, STA457H1, STA414H1.</li>
+                        <li>In order to enrol in ANY 300- or 400-level ACT course, the minimum grade of 63% must be obtained in each of ACT240H1, ACT245H1 and ACT247H1. The enrolment requirements and the prerequisites for all ACT courses will be strictly enforced.</li>
+                        <li>Students who have an interest in pursuing studies in mathematical finance should consider taking MAT244H1, MAT336H1/​ MAT337H1 and APM346H1.</li>
+                        <li>ACT390H1 is a required course in the actuarial science specialist program. The course is not required in the actuarial major program but a limited number of spots are available for actuarial major students by invitation, after a short application process. International students in the actuarial major program are not eligible for work permits for internships.</li>
+                        <li>Students interested in actuarial practices should consider taking ACT371H1, ACT372H1, ACT470H1, ACT471H1, ACT473H1, ACT475H1.</li>
+                        <li>The University of Toronto requires that any student who is using a combination of programs to graduate (e.g. two majors, a major and two minors) must complete a total of at least 12.0 distinct credits that are used to satisfy program requirements. It is possible that a student with a combination of actuarial science major and statistics major may not comply with this 12.0 credit rule (depending on how students select their courses within the statistics major) and may need to take additional courses to satisfy this rule. If you have concerns or questions regarding this rule, please consult with the department.</li>
+                        <li>Students are highly encouraged to take ECO101H1 and ECO102H1 to obtain SOA VEE (Validation by Educational Experience) credit for Economics, and MGT201H1 and ACT349H1 to obtain VEE credit for Accounting and Finance.</li>
+                    </ul>
                 </details>
+
             </div>
         </div>
       )}
