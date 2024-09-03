@@ -190,7 +190,7 @@ export default function MainLeftBar({groupToColor, setTreeData, showCompleted, s
             <aside className={`z-40 fixed left-0 top-0 w-[400px]  bg-gray-100 h-screen p-4 border-r border-gray-200 overflow-y-auto transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
                 <div className="py-14 px-10 items-center">
                     <div className="flex flex-col h-full gap-10">
-                        <h1>Simple (Full) Course Tree Visualizer</h1>
+                        <h1>Prerequisite Tree Visualizer</h1>
                         {/* Course collection field */}
                         <div className="flex flex-col gap-2">
                             <p>Add Completed Courses</p>
@@ -262,7 +262,7 @@ export default function MainLeftBar({groupToColor, setTreeData, showCompleted, s
                             <div className="flex flex-col gap-2">
                                 <div className="flex flex-row gap-2">
                                     <Switch size='sm' checked={toggle_commonality} onChange={() => setToggleCommonality(!toggle_commonality)} />
-                                    <p>Show Common Courses [not implemented]</p>
+                                    <p>Show Common Courses</p>
                                 </div>
 
                                 <div className="flex flex-row gap-2">

@@ -352,7 +352,7 @@ export default function Home() {
           padding: 5px;
           border-radius: 5px;
           display: inline-block;
-          ${showCompleted && "border: 1px solid #047857;"}
+          ${showCompleted ? "border: 1px solid #047857;" : "border: 1px solid green;"}
           cursor: pointer;
         `;
         JunctionNode = styled.div`
@@ -439,7 +439,7 @@ export default function Home() {
                   
               </div>
           <BottomBar isLeftBarOpen={leftBarIsOpen} />
-          <BottomBar2 isLeftBarOpen={leftBarIsOpen} />
+          {/* <BottomBar2 isLeftBarOpen={leftBarIsOpen} /> */}
           </div>
       </div>
     </main>

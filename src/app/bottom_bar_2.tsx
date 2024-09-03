@@ -25,7 +25,7 @@ const BottomBar2 = ({isLeftBarOpen}: {isLeftBarOpen: boolean}) => {
             <div className='flex flex-col pt-5 gap-4'>
          
                 <details>
-                    <summary >Description</summary>
+                    <summary >Enrollment Requirements</summary>
                     
                     This is a limited enrolment program. Students must have completed 4.0 credits and meet the requirements listed below to enrol.
 
