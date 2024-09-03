@@ -2,10 +2,8 @@
 
 import { useState, useEffect } from "react";
 
-import Image from "next/image";
 import MainLeftBar from "./main_left_bar";
-import BottomBar from "./bottom_bar"; // Add this import
-import BottomBar2 from "./bottom_bar_2"; // Add this import
+import BottomBar from "./bottom_bar";
 import { Tree, TreeNode } from 'react-organizational-chart';
 import styled from 'styled-components';
 
