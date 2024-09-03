@@ -320,7 +320,7 @@ export default function MainLeftBar({groupToColor, setTreeData, showCompleted, s
                                     <p>Commonality Pairs</p>
                                     <div className="flex flex-col gap-3">
                                         {Object.keys(groupToColor).map((group, index) => (
-                                            <div
+                                            <div key={index}
                                             >
                                                 {
                                                     // Loop through courses groupToColor["array"] till the second last index
