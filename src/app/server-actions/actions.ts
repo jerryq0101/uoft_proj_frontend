@@ -10,7 +10,13 @@ export async function get_full_tree_data(completed_courses: string[], desired_co
     console.log(completed_courses)
     console.log(desired_courses)
 
-    const res = await fetch(process.env.API_KEY, {
+    const apiUrl = process.env.API_KEY;
+
+    if (!apiUrl) {
+        throw new Error("API URL is not defined in environment variables");
+    }
+
+    const res = await fetch(apiUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -33,8 +39,13 @@ export async function get_simple_tree_data(completed_courses: string[], desired_
     console.log(completed_courses)
     console.log(desired_courses)
 
-    // MAKE A SEPARATE ENDPOINT !!!!!
-    const res = await fetch(process.env.API_KEY, {
+    const apiUrl = process.env.API_KEY;
+
+    if (!apiUrl) {
+        throw new Error("API URL is not defined in environment variables");
+    }
+
+    const res = await fetch(apiUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
