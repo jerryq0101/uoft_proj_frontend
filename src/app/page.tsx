@@ -1,7 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react";
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import { useState, useEffect } from "react";
 
 import Image from "next/image";
 import MainLeftBar from "./main_left_bar";
@@ -14,14 +13,18 @@ interface ChildrenVisibility {
   [key: string]: boolean
 }
 
+interface Colors {
+  [key: string]: string
+}
+
 export default function Home() {
-  const [treeData, setTreeData] = useState<{course_trees: any[]}>();
+  const [treeData, setTreeData] = useState<{course_trees: any[], commonality: CommonalityData}>();
   const [showCompleted, setShowCompleted] = useState(false)
 
   // This can be set to true when the left bar is open by the component itself
   const [leftBarIsOpen, setLeftBarIsOpen] = useState(false)
-
-
+  
+  const [colors, setColors] = useState<Colors>()
   
   const [showChildren, setShowChildren] = useState<ChildrenVisibility>(() => {
     const initialState: ChildrenVisibility = {};
@@ -55,6 +58,13 @@ export default function Home() {
     console.log("LEFT BAR IS OPEN!", leftBarIsOpen)
   }, [leftBarIsOpen])
 
+  useEffect(() => {
+    console.log("CALLING SETTING COLORS")
+    if (treeData) {
+      settingColors(treeData)
+    }
+  }, [treeData])
+
   
   const getNextNodeId = (): string => {
     nodeCountRef += 1
@@ -70,20 +80,99 @@ export default function Home() {
   }
 
   /**
-   * Hypothesis: If marked / completed, then auto hide the children
-   * If not completed, then show children, and make the node red
+   * This Function converts the JSON return from the server action fetch into a Tree with TreeNodes as children.
+   * 
+   * This should be aware of the different common course intersections from the color key tab. And is able to be activated by a toggle state.
    * 
    * @param data 
-   * @returns 
+   * @returns void
    */
-  function convert_data_to_jsx(data: { course_trees: any[] }) {
+  interface CourseTree {
+    label: string;
+    marked: boolean;
+    ready_to_take: boolean;
+    completed: boolean;
+    code: string;
+    full_name: string;
+    children: CourseTree[] | null
+
+    
+  }
+
+  interface ContainmentDict {
+    [key: string]: string[]; // This allows any string key with any value type
+  }
+
+  interface CommonalityList {
+    [key: string]: string[];
+  }
+
+  interface CommonalityData {
+    containment_dict: ContainmentDict,
+    commonality_list: CommonalityList
+    
+  }
+  
+  /**
+   * Check if a single course is contained in a value's list
+   * @param containment_dict 
+   * @param code 
+   * 
+   */
+  function course_contained_in_another_course(containment_dict: ContainmentDict, code: string) {
+    for (const [key, value] of Object.entries(containment_dict)) {
+      if (value.includes(code)) {
+        return true
+      }
+    }
+    console.log("RETURNS FALSE FOR CONTAINMENT", containment_dict, code)
+
+    return false
+  }
+
+  function create_color_labels(commonality_list: CommonalityList){
+    let course_to_color: { [key: string]: string } = {};
+    let group_to_color: { [key: string]: string } = {};
+
+    for (const [key, value] of Object.entries(commonality_list)){
+      const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+
+      for (const course of value) {
+        course_to_color[course] = randomColor
+      }
+      
+      group_to_color[key] = randomColor
+    }
+    
+    return {course_to_color, group_to_color}
+  }
+
+  function settingColors(data: { course_trees: CourseTree[], commonality: CommonalityData }) {
+    const containment_dict = data.commonality.containment_dict
+    const commonality_list = data.commonality.commonality_list
+
+    const {course_to_color, group_to_color} = create_color_labels(commonality_list)
+    setColors(group_to_color)
+  }
+  
+
+  function convert_data_to_jsx(data: { course_trees: CourseTree[], commonality: CommonalityData}) {
     const arr = data.course_trees
+    const containment_dict = data.commonality.containment_dict
+    const commonality_list = data.commonality.commonality_list
 
     let list_of_elements = []
+    
     // to separate out the first node from the rest of the nodes
     if (arr && arr.length > 0 ) {
       for (let i = 0; i < arr.length; i++) {
         const {label, marked, ready_to_take, completed, code, children} = arr[i]
+
+        // // Check here if code is in another tree, if so continue
+        // if (course_contained_in_another_course(containment_dict, code)) {
+        //   continue
+        // }
+
         if (!Array.isArray(children)) {
 
           const StyledNode = styled.div`
@@ -93,17 +182,17 @@ export default function Home() {
             ${showCompleted ? "border: 1px solid #FF9696;" : "border: 1px solid #FFDC83;"}
             cursor: pointer;
           `;
-          
-            list_of_elements.push(<Tree
-                  lineWidth={'2px'}
-                  lineColor={'green'}
-                  lineBorderRadius={'10px'}
-                  label={<StyledNode>{code}</StyledNode>}
-                >
-                  <TreeNode
-                    label={<div>No Prerequisites</div>}
-                  />
-                </Tree>)
+
+          list_of_elements.push(<Tree
+                lineWidth={'2px'}
+                lineColor={'green'}
+                lineBorderRadius={'10px'}
+                label={<StyledNode>{code}</StyledNode>}
+              >
+                <TreeNode
+                  label={<div>No Prerequisites</div>}
+                />
+              </Tree>)
         } else {
           const first_children = children[0]
           
@@ -142,13 +231,24 @@ export default function Home() {
             `
           }
 
+          // Find list of containment
+          let node_contains: string[] = []
+          if (data.commonality.containment_dict) {
+            
+            const containmentList = data.commonality.containment_dict[code]
+            console.log(containmentList)
+            if (containmentList) {
+              node_contains = containmentList
+            }
+          }
+
           list_of_elements.push(<Tree
             lineWidth={'2px'}
             lineColor={'green'}
             lineBorderRadius={'10px'}
             label={
               <StyledNode>
-                {code} {showCompleted && status}
+                {code} {showCompleted && status} {node_contains ? `contains ${node_contains}`: ""}
               </StyledNode>
             }
           >
@@ -164,16 +264,7 @@ export default function Home() {
     }
 
 
-    function process_node(node: { 
-      label: string,
-      marked: boolean,
-      ready_to_take: boolean,
-      completed: false,
-      code: string,
-      full_name: null,
-      children: []
-    }) {
-
+    function process_node(node: CourseTree) {
       let StyledNode = styled.div`
         padding: 5px;
         border-radius: 5px;
@@ -261,15 +352,31 @@ export default function Home() {
     }
   }
 
+  /**
+   * 
+   * This function converts intersection and containments to a color key tab
+   * 
+   */
+  function convert_intersection_and_containments(data: { containment: {} }) {
+    
+  }
+
+  /**
+   * 
+   * 
+   * 
+   */
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between bg-">
-      <MainLeftBar setTreeData={setTreeData} setLeftBarIsOpen={setLeftBarIsOpen} showCompleted={showCompleted} setShowCompleted={setShowCompleted}/>
+      <MainLeftBar groupToColor={colors} setTreeData={setTreeData} setLeftBarIsOpen={setLeftBarIsOpen} showCompleted={showCompleted} setShowCompleted={setShowCompleted}/>
       
       {/* Make this component align from the right of the screen */}
       <div className="w-full flex flex-grow flex-col items-end ">
           <div className={`flex flex-col flex-grow h-full pb-12 ${leftBarIsOpen ? "w-[calc(100%-400px)]" : "w-full"}`}>
               <div className="z-10 pt-5">
                   {treeData && convert_data_to_jsx(treeData)}
+                  
               </div>
           <BottomBar isLeftBarOpen={leftBarIsOpen} />
           <BottomBar2 isLeftBarOpen={leftBarIsOpen} />
