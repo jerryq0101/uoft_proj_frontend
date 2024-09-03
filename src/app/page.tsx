@@ -414,15 +414,6 @@ export default function Home() {
     }
   }
 
-  /**
-   * 
-   * This function converts intersection and containments to a color key tab
-   * 
-   */
-  function convert_intersection_and_containments(data: { containment: {} }) {
-    
-  }
-
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between bg-">
@@ -439,7 +430,6 @@ export default function Home() {
                   
               </div>
           <BottomBar isLeftBarOpen={leftBarIsOpen} />
-          {/* <BottomBar2 isLeftBarOpen={leftBarIsOpen} /> */}
           </div>
       </div>
     </main>
