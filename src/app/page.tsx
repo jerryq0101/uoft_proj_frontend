@@ -20,11 +20,13 @@ interface Colors {
 export default function Home() {
   const [treeData, setTreeData] = useState<{course_trees: any[], commonality: CommonalityData}>();
   const [showCompleted, setShowCompleted] = useState(false)
+  const [toggle_commonality, setToggleCommonality] = useState(false)
 
   // This can be set to true when the left bar is open by the component itself
   const [leftBarIsOpen, setLeftBarIsOpen] = useState(false)
   
   const [colors, setColors] = useState<Colors>()
+  const [commonNodeColors, setCommonNodeColors] = useState<Colors>()
   
   const [showChildren, setShowChildren] = useState<ChildrenVisibility>(() => {
     const initialState: ChildrenVisibility = {};
@@ -130,28 +132,76 @@ export default function Home() {
     return false
   }
 
+  const tailwindColors = [
+    'bg-red-300', 'bg-green-300', 'bg-blue-300', 'bg-yellow-300', 'bg-purple-300',
+    'bg-pink-300', 'bg-indigo-300', 'bg-teal-300', 'bg-orange-300', 'bg-gray-300'
+  ];
+
+  function convertStringToArray(str: string): string[] {
+    // Replace single quotes with double quotes
+    const jsonString = str.replace(/'/g, '"');
+    // Parse the JSON string to an array
+    return JSON.parse(jsonString);
+  }
+
   function create_color_labels(commonality_list: CommonalityList){
     let course_to_color: { [key: string]: string } = {};
-    let group_to_color: { [key: string]: string } = {};
+    let group_to_color: { [key: string]: any } = {};
+
+    let taken_colors: Set<string> = new Set()
 
     for (const [key, value] of Object.entries(commonality_list)){
-      const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+      
+      // strat here is to get a index of color using of the length of the key array
+      // if the color is already taken, incremenet index until the color is not taken
+      // assign that color as random color
 
+      // Convert key to array
+      const keyArray = convertStringToArray(key)
+      console.log("KEY ARRAY", keyArray)
+      
+      // Length of the key array
+      let index = keyArray.length
+      let tempColor = tailwindColors[index]
+      while (taken_colors.has(tempColor)) {
+        index += 1
+        tempColor = tailwindColors[index]
+        
+        if (index > tailwindColors.length - 1){
+          index = 0
+        }
+      }
+      taken_colors.add(tempColor)
+      
+      const randomColor = tempColor
+      
       for (const course of value) {
         course_to_color[course] = randomColor
       }
-      
-      group_to_color[key] = randomColor
+      console.log("Course to Color", course_to_color)
+
+      group_to_color[key] = {
+        "color": randomColor,
+        "array": keyArray,
+        "common_values": value
+      }
     }
     
     return {course_to_color, group_to_color}
   }
 
+
   function settingColors(data: { course_trees: CourseTree[], commonality: CommonalityData }) {
     const containment_dict = data.commonality.containment_dict
     const commonality_list = data.commonality.commonality_list
 
+    // Worry about the course_to_color situation after I sort the key tab out
     const {course_to_color, group_to_color} = create_color_labels(commonality_list)
+    
+    // Set colors for tree nodes state
+    setCommonNodeColors(course_to_color)
+
+    // Hands group to colors to the left bar
     setColors(group_to_color)
   }
   
@@ -179,7 +229,7 @@ export default function Home() {
             padding: 5px;
             border-radius: 5px;
             display: inline-block;
-            ${showCompleted ? "border: 1px solid #FF9696;" : "border: 1px solid #FFDC83;"}
+            ${showCompleted ? "border: 1px solid #FFDC83;" : "border: 1px solid green;"}
             cursor: pointer;
           `;
 
@@ -187,7 +237,11 @@ export default function Home() {
                 lineWidth={'2px'}
                 lineColor={'green'}
                 lineBorderRadius={'10px'}
-                label={<StyledNode>{code}</StyledNode>}
+                label={
+                    <StyledNode
+                        className={`${commonNodeColors && toggle_commonality ? commonNodeColors[code] : ""}`}
+                    >{code}</StyledNode>
+                  }
               >
                 <TreeNode
                   label={<div>No Prerequisites</div>}
@@ -204,29 +258,29 @@ export default function Home() {
             cursor: pointer;
           `;
           let status = ""
-          if (ready_to_take) {
+          if (ready_to_take && !completed) {
             StyledNode = styled.div`
               padding: 5px;
               border-radius: 5px;
               display: inline-block;
-              ${showCompleted ? "border: 1px solid #ECC94B;" : "border: 1px solid #FFDC83;"}
+              ${showCompleted ? "border: 1px solid yellow;" : "border: 1px solid red;"}
               cursor: pointer;
             `
-
           } else if (completed) {
             StyledNode = styled.div`
               padding: 5px;
               border-radius: 5px;
               display: inline-block;
-              ${showCompleted ? "border: 1px solid #FFDC83;" : "border: 1px solid #FFDC83;"}
+              ${showCompleted ? "border: 1px solid green;": "border: 1px solid red;"}
               cursor: pointer;
             `
-          } else if (marked) {
+          } 
+          if (marked) {
             StyledNode = styled.div`
               padding: 5px;
               border-radius: 5px;
               display: inline-block;
-              ${showCompleted ? "border: 1px solid #FFDC83;" : "border: 1px solid #FFDC83;"}
+              ${showCompleted ? "border: 1px solid green;" : "border: 1px solid red;"}
               cursor: pointer;
             `
           }
@@ -242,22 +296,34 @@ export default function Home() {
             }
           }
 
-          list_of_elements.push(<Tree
+          list_of_elements.push(
+          <Tree
             lineWidth={'2px'}
             lineColor={'green'}
             lineBorderRadius={'10px'}
             label={
-              <StyledNode>
-                {code} {showCompleted && status} {node_contains ? `contains ${node_contains}`: ""}
+              <StyledNode
+                className={`${commonNodeColors && toggle_commonality ? commonNodeColors[code] : ""}`}
+              >
+                {code} {showCompleted && status} {node_contains.length > 0 ? `contains ${node_contains}`: ""}
               </StyledNode>
             }
           >
             {process_node(first_children)}
           </Tree>)
+          
         }
 
       }
-      return list_of_elements
+      return (<div className="flex flex-col gap-10">
+        {list_of_elements.map((element, index) => {
+          return (index < list_of_elements.length) ? <div>
+            {element}
+            <br></br>
+            <hr></hr>
+          </div> : <div>{element}</div>
+        })}
+      </div>)
       
     } else {
       return []
@@ -269,14 +335,14 @@ export default function Home() {
         padding: 5px;
         border-radius: 5px;
         display: inline-block;
-        ${showCompleted ? "border: 1px solid #FF9696;" : "border: 1px solid #047857;"}
+        ${showCompleted ? "border: 1px solid #FF9696;" : "border: 1px solid green;"}
         cursor: pointer;
       `;
 
       let JunctionNode = styled.div`
         padding: 5px;
         display: inline-block;
-        ${showCompleted ? "border: 1px solid #FF9696;" : "border: 1px solid #047857;"}
+        ${showCompleted ? "border: 1px solid #FF9696;" : "border: 1px solid green;"}
         cursor: pointer;
       `
 
@@ -292,29 +358,25 @@ export default function Home() {
         JunctionNode = styled.div`
           padding: 5px;
           display: inline-block;
-          ${showCompleted && "border: 1px solid #047857;"}
+          ${showCompleted ? "border: 1px solid #047857;" : "border: 1px solid green;"}
           cursor: pointer;
         `;
-      } else if (node.marked) {
+      } else if (node.ready_to_take && !node.completed) {
         StyledNode = styled.div`
           padding: 5px;
           border-radius: 5px;
           display: inline-block;
-          ${showCompleted && "border: 1px solid #ECC94B;"}
+          ${showCompleted ? "border: 1px solid #ECC94B;" : "border: 1px solid green;"}
           cursor: pointer;
         `;
-        JunctionNode = styled.div`
-          padding: 5px;
-          display: inline-block;
-          ${showCompleted && "border: 1px solid #047857;"}
-          cursor: pointer;
-        `;
-      } else if (node.ready_to_take) {
+
+      } 
+      if (node.marked) {
         StyledNode = styled.div`
           padding: 5px;
           border-radius: 5px;
           display: inline-block;
-          ${showCompleted && "border: 1px solid #FFDC83;"}
+          ${showCompleted && "border: 1px solid green;"}
           cursor: pointer;
         `;
       }
@@ -327,7 +389,7 @@ export default function Home() {
         const code = node.code
         const hasChildren = Array.isArray(node.children)
         // TailwindCSS does not work with TreeNode
-        label = <StyledNode id={nodeId} onClick={() => toggleNodeExpansion(nodeId)}>
+        label = <StyledNode className={`${commonNodeColors && toggle_commonality ? commonNodeColors[code] : ""}`}  id={nodeId} onClick={() => toggleNodeExpansion(nodeId)}>
             {code} {hasChildren ? (isExpanded ? "🔽":"▶️") : ""}
           </StyledNode>
       }
@@ -361,19 +423,17 @@ export default function Home() {
     
   }
 
-  /**
-   * 
-   * 
-   * 
-   */
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between bg-">
-      <MainLeftBar groupToColor={colors} setTreeData={setTreeData} setLeftBarIsOpen={setLeftBarIsOpen} showCompleted={showCompleted} setShowCompleted={setShowCompleted}/>
+      <MainLeftBar 
+        groupToColor={colors} setTreeData={setTreeData} setLeftBarIsOpen={setLeftBarIsOpen} showCompleted={showCompleted} setShowCompleted={setShowCompleted}
+        toggle_commonality={toggle_commonality} setToggleCommonality={setToggleCommonality}
+      />
       
       {/* Make this component align from the right of the screen */}
       <div className="w-full flex flex-grow flex-col items-end ">
-          <div className={`flex flex-col flex-grow h-full pb-12 ${leftBarIsOpen ? "w-[calc(100%-400px)]" : "w-full"}`}>
+          <div className={`flex flex-col flex-grow h-full pb-12 ${leftBarIsOpen ? "w-[calc(100%-300px)]" : "w-full"}`}>
               <div className="z-10 pt-5">
                   {treeData && convert_data_to_jsx(treeData)}
                   

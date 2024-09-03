@@ -23,6 +23,16 @@ const BottomBar = ({isLeftBarOpen}: {isLeftBarOpen: boolean}) => {
   useEffect(() => {
     if (selectedFocus === "web_tech_focus_reqs") {
       setFocusContent(web_tech_focus_reqs)
+    } else if (selectedFocus === "ai_focus_reqs") {
+      setFocusContent(ai_focus_reqs)
+    } else if (selectedFocus === "comp_ling_focus_reqs") {
+      setFocusContent(comp_ling_focus_reqs)
+    } else if (selectedFocus === "comp_sys_focus_reqs") {
+      setFocusContent(comp_sys_focus_reqs)
+    } else if (selectedFocus === "comp_vis_focus_reqs") {
+      setFocusContent(comp_vis_focus_reqs)
+    } else if (selectedFocus === "game_design_focus_reqs") {
+      setFocusContent(game_design_focus_reqs)
     } else if (selectedFocus === "hci_focus_reqs") {
       setFocusContent(hci_focus_reqs)
     } else if (selectedFocus === "sci_comp_focus_reqs") {
@@ -31,7 +41,7 @@ const BottomBar = ({isLeftBarOpen}: {isLeftBarOpen: boolean}) => {
       setFocusContent(toc_focus_reqs)
     } else if (selectedFocus === "web_tech_focus_reqs") {
       setFocusContent(web_tech_focus_reqs)
-    }
+    } 
   }, [selectedFocus])
 
   return (
@@ -47,8 +57,14 @@ const BottomBar = ({isLeftBarOpen}: {isLeftBarOpen: boolean}) => {
         <div className="p-4 h-[calc(100%-3rem)] overflow-y-auto">
           <Select value={selectedFocus} onChange={(e) => setSelectedFocus(e.target.value)} size="sm" placeholder='Select CS Focus'>
             <option value='web_tech_focus_reqs'>Focus in Web and Internet Technologies (Major)</option>
-            <option value='option2'>Option 2</option>
-            <option value='option3'>Option 3</option>
+            <option value='ai_focus_reqs'>Focus in Artificial Intelligence (Major)</option>
+            <option value='comp_ling_focus_reqs'>Focus in Computational Linguistics and Natural Language Processing (Major)</option>
+            <option value='comp_sys_focus_reqs'>Focus in Computer Systems (Major)</option>
+            <option value='comp_vis_focus_reqs'>Focus in Computer Vision (Major)</option>
+            <option value='game_design_focus_reqs'>Focus in Game Design (Major)</option>
+            <option value='hci_focus_reqs'>Focus in Human-Computer Interaction (Major)</option>
+            <option value='sci_comp_focus_reqs'>Focus in Scientific Computing (Major)</option>
+            <option value='toc_focus_reqs'>Focus in Theory of Computation (Major)</option>
           </Select>
           
             <div className='flex flex-col pt-5 gap-4'>
