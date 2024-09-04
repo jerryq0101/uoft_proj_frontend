@@ -227,13 +227,13 @@ export default function MainPage() {
             padding: 5px;
             border-radius: 5px;
             display: inline-block;
-            ${showCompleted ? "border: 1px solid #FFDC83;" : "border: 1px solid green;"}
+            ${showCompleted ? "border: 3px solid #FFDC83;" : "border: 3px solid green;"}
             cursor: pointer;
           `;
 
           list_of_elements.push(<Tree
                                   lineWidth={'2px'}
-                                  lineColor={'green'}
+                                  lineColor={'black'}
                                   lineBorderRadius={'10px'}
                                   label={
                                       <StyledNode
@@ -252,7 +252,7 @@ export default function MainPage() {
             padding: 5px;
             border-radius: 5px;
             display: inline-block;
-            ${showCompleted ? "border: 1px solid red;" : "border: 1px solid green;"}
+            ${showCompleted ? "border: 3px solid red;" : "border: 3px solid green;"}
             cursor: pointer;
           `;
           let status = ""
@@ -261,7 +261,7 @@ export default function MainPage() {
               padding: 5px;
               border-radius: 5px;
               display: inline-block;
-              ${showCompleted ? "border: 1px solid yellow;" : "border: 1px solid red;"}
+              ${showCompleted ? "border: 3px solid yellow;" : "border: 3px solid red;"}
               cursor: pointer;
             `
           } else if (completed) {
@@ -269,7 +269,7 @@ export default function MainPage() {
               padding: 5px;
               border-radius: 5px;
               display: inline-block;
-              ${showCompleted ? "border: 1px solid green;": "border: 1px solid red;"}
+              ${showCompleted ? "border: 3px solid green;": "border: 3px solid red;"}
               cursor: pointer;
             `
           } 
@@ -278,7 +278,7 @@ export default function MainPage() {
               padding: 5px;
               border-radius: 5px;
               display: inline-block;
-              ${showCompleted ? "border: 1px solid green;" : "border: 1px solid red;"}
+              ${showCompleted ? "border: 3px solid green;" : "border: 3px solid red;"}
               cursor: pointer;
             `
           }
@@ -297,7 +297,7 @@ export default function MainPage() {
           list_of_elements.push(
           <Tree
             lineWidth={'2px'}
-            lineColor={'green'}
+            lineColor={'black'}
             lineBorderRadius={'10px'}
             label={
               <StyledNode
@@ -333,14 +333,14 @@ export default function MainPage() {
         padding: 5px;
         border-radius: 5px;
         display: inline-block;
-        ${showCompleted ? "border: 1px solid #FF9696;" : "border: 1px solid green;"}
+        ${showCompleted ? "border: 3px solid #FF9696;" : "border: 3px solid green;"}
         cursor: pointer;
       `;
 
       let JunctionNode = styled.div`
         padding: 5px;
         display: inline-block;
-        ${showCompleted ? "border: 1px solid #FF9696;" : "border: 1px solid green;"}
+        ${showCompleted ? "border: 3px solid #FF9696;" : "border: 3px solid green;"}
         cursor: pointer;
       `
 
@@ -350,13 +350,13 @@ export default function MainPage() {
           padding: 5px;
           border-radius: 5px;
           display: inline-block;
-          ${showCompleted ? "border: 1px solid #047857;" : "border: 1px solid green;"}
+          ${showCompleted ? "border: 3px solid #047857;" : "border: 3px solid green;"}
           cursor: pointer;
         `;
         JunctionNode = styled.div`
           padding: 5px;
           display: inline-block;
-          ${showCompleted ? "border: 1px solid #047857;" : "border: 1px solid green;"}
+          ${showCompleted ? "border: 3px solid #047857;" : "border: 3px solid green;"}
           cursor: pointer;
         `;
       } else if (node.ready_to_take && !node.completed) {
@@ -364,7 +364,7 @@ export default function MainPage() {
           padding: 5px;
           border-radius: 5px;
           display: inline-block;
-          ${showCompleted ? "border: 1px solid #ECC94B;" : "border: 1px solid green;"}
+          ${showCompleted ? "border: 3px solid #ECC94B;" : "border: 3px solid green;"}
           cursor: pointer;
         `;
 
@@ -374,7 +374,7 @@ export default function MainPage() {
           padding: 5px;
           border-radius: 5px;
           display: inline-block;
-          ${showCompleted && "border: 1px solid green;"}
+          ${showCompleted && "border: 3px solid green;"}
           cursor: pointer;
         `;
       }
