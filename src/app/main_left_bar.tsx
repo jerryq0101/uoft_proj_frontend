@@ -155,8 +155,12 @@ export default function MainLeftBar({groupToColor, setTreeData, showCompleted, s
         const data = await get_data()
         // const processed_data = convert_data_to_visualization(data)
         console.log(data)
-        setTreeData(data)
-
+        if (data.error) {
+            console.log("ERROR", data.error)
+            setLoading(false)
+        } else {
+            setTreeData(data)
+        }
         setLoading(false)
     }
 
