@@ -57,7 +57,6 @@ export default function MainLeftBar({groupToColor, setTreeData, showCompleted, s
         const handleResize = () => {
             const newIsMobile = window.innerWidth <= 768;
             if (newIsMobile) {
-                console.log("HANDLE RESIZE TRIGGERED")
                 setIsOpen(false);
                 setLeftBarIsOpen(false);
             }
@@ -68,7 +67,6 @@ export default function MainLeftBar({groupToColor, setTreeData, showCompleted, s
 
 
     const toggleSidebar = () => {
-        console.log("TOGGLE SIDEBAR TRIGGERED")
         setIsOpen(!isOpen);
         setLeftBarIsOpen(!isOpen);
     };
@@ -97,7 +95,6 @@ export default function MainLeftBar({groupToColor, setTreeData, showCompleted, s
         // Generate a random color word for the course
         const randomColor = colorWords[Math.floor(Math.random() * colorWords.length)];
         
-        console.log(course, randomColor)
         const course_with_color = {
             name: course,
             color: randomColor
@@ -127,7 +124,6 @@ export default function MainLeftBar({groupToColor, setTreeData, showCompleted, s
     async function get_data() {
         const completedCourseNames = completed_courses.map(course => course.name);
         const desiredCourseNames = desired_courses.map(course => course.name);
-        console.log("GET Data call")
         const data = await get_full_tree_data(completedCourseNames, desiredCourseNames);
         return data
     }
@@ -135,7 +131,6 @@ export default function MainLeftBar({groupToColor, setTreeData, showCompleted, s
     async function get_simple_data() {
         const completedCourseNames = completed_courses.map(course => course.name);
         const desiredCourseNames = desired_courses.map(course => course.name);
-        console.log("GET Data call")
         const data = await get_simple_tree_data(completedCourseNames, desiredCourseNames);
         return data
     }
@@ -148,15 +143,12 @@ export default function MainLeftBar({groupToColor, setTreeData, showCompleted, s
      */
     async function handle_full_tree_btn_click() {
         // Takes in data from the form
-        console.log("CLICKED full tree")
 
         setLoading(true)
 
         const data = await get_data()
         // const processed_data = convert_data_to_visualization(data)
-        console.log(data)
         if (data.error) {
-            console.log("ERROR", data.error)
             setLoading(false)
         } else {
             setTreeData(data)
@@ -166,23 +158,14 @@ export default function MainLeftBar({groupToColor, setTreeData, showCompleted, s
 
     async function handle_simple_tree_btn_click() {
         // Takes in data from the form
-        console.log("CLICKED simple tree")
-
         setLoading(true)
 
         const data = await get_simple_data()
-        console.log(data)
         setTreeData(data)
 
         setLoading(false)
     }
 
-    /**
-     * - Colors can be passed through to this using useEffect
-     * TODO:
-     * - Add Content in degree and focus explorer
-     */
-    console.log("GroupTO Color", groupToColor)
 
     return (
         <>
