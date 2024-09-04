@@ -191,10 +191,12 @@ export default function MainLeftBar({groupToColor, setTreeData, showCompleted, s
             <aside className={`z-40 fixed left-0 top-0 w-[400px]  bg-gray-100 h-screen p-4 border-r border-gray-200 overflow-y-auto transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
                 <div className="py-14 px-10 items-center">
                     <div className="flex flex-col h-full gap-10">
-                        <div className="flex flex-col gap-2">
-                            <h1>Prerequisite Tree Visualizer</h1>
-                            <p>&quot;Build Tree&quot; builds the direct prerequisite tree of a course(s). &quot;Build Full Tree&quot; builds the entire prerequisite tree of a course(s) (i.e. including all the courses that are prerequisites for those courses, and so on...)</p>
-                            <p>Made by Jerry</p>
+                        <div className="flex flex-col gap-3">
+                            <h1>Prerequisite Tree Visualizer (UofT)</h1>
+                            <div className="flex flex-col gap-2">
+                                <p>Notes: &quot;Build Tree&quot; builds the direct prerequisite tree of a course(s). &quot;Build Full Tree&quot; builds the entire prerequisite tree of a course(s) (i.e. including all the courses that are prerequisites for those courses, and so on...). Currently only covers the CS department entirely.</p>
+                                <p>Made by jerryq0101</p>
+                            </div>
                         </div>
                         {/* Course collection field */}
                         <div className="flex flex-col gap-2">
