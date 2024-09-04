@@ -193,7 +193,7 @@ export default function MainLeftBar({groupToColor, setTreeData, showCompleted, s
                     <div className="flex flex-col h-full gap-10">
                         <div className="flex flex-col gap-2">
                             <h1>Prerequisite Tree Visualizer</h1>
-                            <p>"Build Tree" builds the direct prerequisite tree of a course(s). "Build Full Tree" builds the entire prerequisite tree of a course(s) including all the courses that are prerequisites for those courses, and so on...</p>
+                            <p>&quot;Build Tree&quot; builds the direct prerequisite tree of a course(s). &quot;Build Full Tree&quot; builds the entire prerequisite tree of a course(s) (i.e. including all the courses that are prerequisites for those courses, and so on...)</p>
                             <p>Made by Jerry</p>
                         </div>
                         {/* Course collection field */}
