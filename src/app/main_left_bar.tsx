@@ -191,7 +191,11 @@ export default function MainLeftBar({groupToColor, setTreeData, showCompleted, s
             <aside className={`z-40 fixed left-0 top-0 w-[400px]  bg-gray-100 h-screen p-4 border-r border-gray-200 overflow-y-auto transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
                 <div className="py-14 px-10 items-center">
                     <div className="flex flex-col h-full gap-10">
-                        <h1>Prerequisite Tree Visualizer</h1>
+                        <div className="flex flex-col gap-2">
+                            <h1>Prerequisite Tree Visualizer</h1>
+                            <p>"Build Tree" builds the direct prerequisite tree of a course(s). "Build Full Tree" builds the entire prerequisite tree of a course(s) including all the courses that are prerequisites for those courses, and so on...</p>
+                            <p>Made by Jerry</p>
+                        </div>
                         {/* Course collection field */}
                         <div className="flex flex-col gap-2">
                             <p>Add Completed Courses</p>
@@ -318,7 +322,7 @@ export default function MainLeftBar({groupToColor, setTreeData, showCompleted, s
                         {toggle_commonality && 
                             <div>
                                 {groupToColor && <div>
-                                    <p>Commonality Pairs</p>
+                                    <p>Commonality Pair(s) Legend</p>
                                     <div className="flex flex-col gap-3">
                                         {Object.keys(groupToColor).map((group, index) => (
                                             <div key={index}
