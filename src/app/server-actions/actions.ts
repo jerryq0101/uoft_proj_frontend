@@ -31,8 +31,6 @@ export async function get_full_tree_data(completed_courses: string[], desired_co
         }),
     })
 
-    console.log(res)
-
     return res.json()
 }
 /**
@@ -62,8 +60,6 @@ export async function get_simple_tree_data(completed_courses: string[], desired_
             "tree_choice": "simple"
         }),
     })
-
-    console.log(res)
 
     return res.json()
 }

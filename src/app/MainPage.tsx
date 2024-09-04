@@ -49,17 +49,17 @@ export default function MainPage() {
     nodeCountRef = 0;
   }, [])
 
-  useEffect(() => {
-    console.log("RECEIVED DATA!", treeData)
-  }, [treeData])
+  // useEffect(() => {
+  //   console.log("RECEIVED DATA!", treeData)
+  // }, [treeData])
 
 
-  useEffect(() => {
-    console.log("LEFT BAR IS OPEN!", leftBarIsOpen)
-  }, [leftBarIsOpen])
+  // useEffect(() => {
+  //   console.log("LEFT BAR IS OPEN!", leftBarIsOpen)
+  // }, [leftBarIsOpen])
 
   useEffect(() => {
-    console.log("CALLING SETTING COLORS")
+    // console.log("CALLING SETTING COLORS")
     if (treeData) {
       settingColors(treeData)
     }
@@ -72,7 +72,6 @@ export default function MainPage() {
   }
 
   const toggleNodeExpansion = (id: string) => {
-    console.log("TOGGLE NODE EXPANSION", id)
     setShowChildren(prev => ({
       ...prev,
       [id]: !prev[id]
@@ -119,16 +118,16 @@ export default function MainPage() {
    * @param code 
    * 
    */
-  function course_contained_in_another_course(containment_dict: ContainmentDict, code: string) {
-    for (const [key, value] of Object.entries(containment_dict)) {
-      if (value.includes(code)) {
-        return true
-      }
-    }
-    console.log("RETURNS FALSE FOR CONTAINMENT", containment_dict, code)
+  // function course_contained_in_another_course(containment_dict: ContainmentDict, code: string) {
+  //   for (const [key, value] of Object.entries(containment_dict)) {
+  //     if (value.includes(code)) {
+  //       return true
+  //     }
+  //   }
+  //   console.log("RETURNS FALSE FOR CONTAINMENT", containment_dict, code)
 
-    return false
-  }
+  //   return false
+  // }
 
   const tailwindColors = [
     'bg-red-300', 'bg-green-300', 'bg-blue-300', 'bg-yellow-300', 'bg-purple-300',
@@ -156,7 +155,7 @@ export default function MainPage() {
 
       // Convert key to array
       const keyArray = convertStringToArray(key)
-      console.log("KEY ARRAY", keyArray)
+      // console.log("KEY ARRAY", keyArray)
       
       // Length of the key array
       let index = keyArray.length
@@ -176,7 +175,7 @@ export default function MainPage() {
       for (const course of value) {
         course_to_color[course] = randomColor
       }
-      console.log("Course to Color", course_to_color)
+      // console.log("Course to Color", course_to_color)
 
       group_to_color[key] = {
         "color": randomColor,
@@ -288,7 +287,6 @@ export default function MainPage() {
           if (data.commonality.containment_dict) {
             
             const containmentList = data.commonality.containment_dict[code]
-            console.log(containmentList)
             if (containmentList) {
               node_contains = containmentList
             }
