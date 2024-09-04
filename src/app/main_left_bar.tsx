@@ -330,9 +330,13 @@ export default function MainLeftBar({groupToColor, setTreeData, showCompleted, s
     
                                                 <span> = </span> 
                                                 <span className={`${groupToColor[group].color}`}>
-                                                    {groupToColor[group]["common_values"].map((c: string, i: number) => (
-                                                        <span key={i}>{c}</span>
-                                                    ))}
+                                                    {groupToColor[group]["common_values"].map((c: string, i: number) => {
+                                                        if (i === groupToColor[group]["common_values"].length - 1) {
+                                                            return <span key={i}>{c}</span>
+                                                        } else {
+                                                            return <span key={i}>{c}, </span>
+                                                        }
+                                                    })}
                                                 </span>
                                             </div>
                                         ))}
