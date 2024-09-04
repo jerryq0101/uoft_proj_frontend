@@ -18,7 +18,7 @@ export async function get_full_tree_data(completed_courses: string[], desired_co
     if (!apiUrl) {
         throw new Error("API URL is not defined in environment variables");
     }
-
+ 
     const res = await fetch(apiUrl, {
         method: 'POST',
         headers: {
