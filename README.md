@@ -1,8 +1,12 @@
 # Prerequisite Tree Visualizer (UofT) - Frontend Visualizer
 
-### A web application that visualizes prerequisite trees for courses at the University of Toronto, with a focus on the Computer Science department.
+### A web application that visualizes prerequisite trees for courses at the University of Toronto, with a focus on the Computer Science department. 
 
 ---
+
+### Backend Parts
+
+- ADD HERE WHEN DOCUMENTATION COMPLETE
 
 ### Features
 

@@ -3,16 +3,17 @@
 import { config } from "dotenv"
 config();
 
+import { ApiInput, RawData } from "../interfaces"
+
 /**
  * This function is used to get the tree data for the entire prerequisite tree
  */
-export async function get_full_tree_data(completed_courses: string[], desired_courses: string[]) {
+export async function get_full_tree_data({completed_courses, desired_courses}: ApiInput):Promise<RawData | { error: string }> {
     if (completed_courses.length === 0 && desired_courses.length === 0) {
         return {
             "error": "No courses provided"
         }
     }
-
     const apiUrl = process.env.API_KEY;
 
     if (!apiUrl) {
@@ -36,7 +37,7 @@ export async function get_full_tree_data(completed_courses: string[], desired_co
 /**
  * This function is used to get the tree data for first level (as in direct) prerequisites
  */
-export async function get_simple_tree_data(completed_courses: string[], desired_courses: string[]) {
+export async function get_simple_tree_data({completed_courses, desired_courses}: ApiInput): Promise<RawData | { error: string }> {
     if (completed_courses.length === 0 && desired_courses.length === 0) {
         return {
             "error": "No courses provided"
