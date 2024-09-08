@@ -53,7 +53,6 @@ export interface CommonalityLegendInformation {
 }
 
 // LEFT BAR
-
 export interface ApiInput {
     completed_courses: string[],
     desired_courses: string[],

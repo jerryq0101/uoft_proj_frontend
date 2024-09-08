@@ -23,7 +23,7 @@ export default function MainPage() {
   
   // Variables associated with the left bar
   const [showCompleted, setShowCompleted] = useState(false)
-  const [toggle_commonality, setToggleCommonality] = useState(false)
+  const [toggleCommonality, setToggleCommonality] = useState(false)
   const [leftBarIsOpen, setLeftBarIsOpen] = useState(false)
   const [legendInformation, setLegendInformation] = useState<CommonalityLegendInformation>()
   const [commonNodeColors, setCommonNodeColors] = useState<Colors>()
@@ -101,7 +101,7 @@ export default function MainPage() {
                                   lineBorderRadius={'10px'}
                                   label={
                                       <StyledNode
-                                          className={`${commonNodeColors && toggle_commonality ? commonNodeColors[code] : ""}`}
+                                          className={`${commonNodeColors && toggleCommonality ? commonNodeColors[code] : ""}`}
                                       >{code}</StyledNode>
                                     }
                                 >
@@ -132,7 +132,7 @@ export default function MainPage() {
             lineBorderRadius={'10px'}
             label={
               <StyledNode
-                className={`${commonNodeColors && toggle_commonality ? commonNodeColors[code] : ""}`}
+                className={`${commonNodeColors && toggleCommonality ? commonNodeColors[code] : ""}`}
               >
                 {code} {node_contains.length > 0 ? `contains ${node_contains}`: ""}
               </StyledNode>
@@ -170,7 +170,7 @@ export default function MainPage() {
       if (node.label == "Course") {
         const code = node.code
         const hasChildren = Array.isArray(node.children)
-        label = <StyledNode className={`${commonNodeColors && toggle_commonality ? commonNodeColors[code] : ""}`}  id={nodeId} onClick={() => toggleNodeExpansion(nodeId)}>
+        label = <StyledNode className={`${commonNodeColors && toggleCommonality ? commonNodeColors[code] : ""}`}  id={nodeId} onClick={() => toggleNodeExpansion(nodeId)}>
             {code} {hasChildren ? (isExpanded ? "🔽":"▶️") : ""}
           </StyledNode>
       }
@@ -200,7 +200,7 @@ export default function MainPage() {
     <main className="flex min-h-screen flex-col items-center justify-between bg-">
       <MainLeftBar 
         groupToColor={legendInformation} setTreeData={setTreeData} setLeftBarIsOpen={setLeftBarIsOpen} showCompleted={showCompleted} setShowCompleted={setShowCompleted}
-        toggle_commonality={toggle_commonality} setToggleCommonality={setToggleCommonality}
+        toggle_commonality={toggleCommonality} setToggleCommonality={setToggleCommonality}
       />
       
       {/* Make this component align from the right of the screen */}
