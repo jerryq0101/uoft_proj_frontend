@@ -17,7 +17,13 @@ function convertStringToArray(str: string): string[] {
     return JSON.parse(jsonString);
 }
 
-export function create_color_labels(commonality_list: CommonalityList): ColorLabelsDict {
+/**
+ * Creates a dictionary for the MainLeftBar commonality legend (intersection of courses -> common courses list), and a dictionary for the MainPage course coloring (course string -> color string)
+ * @param commonality_list - A dictionary with keys as lists (in string form) of courses that have common prerequisites, the values are lists of those common prerequisites
+ * @returns course_to_color: { [key: string]: string } - A dictionary for the MainPage course coloring (course string -> color string)
+ * @returns group_to_color: { [key: string]: any } - A dictionary for the MainLeftBar commonality legend (intersection of courses -> common courses list)
+ */
+export function createColorLabels(commonality_list: CommonalityList): ColorLabelsDict {
     let course_to_color: { [key: string]: string } = {};
     let group_to_color: { [key: string]: any } = {};
 
@@ -65,6 +71,13 @@ export function create_color_labels(commonality_list: CommonalityList): ColorLab
 
 // MainPage Convert to Tree JSX funcionality 
 
+/**
+ * Determines the style of the node based on the node's completion, read_to_take, and marked status (for both course nodes and AND OR nodes)
+ * @param node - The node to determine the style for
+ * @param showCompleted - A boolean state variable to determine if completed courses should be shown
+ * @returns StyledNode: any - The styled node
+ * @returns JunctionNode: any - The styled junction node
+ */
 export function determineStyle(node: CourseTree, showCompleted: boolean): {StyledNode: any, JunctionNode: any} {
     let StyledNode = styled.div`
         padding: 5px;

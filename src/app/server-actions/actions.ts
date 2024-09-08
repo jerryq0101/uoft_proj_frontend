@@ -5,10 +5,14 @@ config();
 
 import { ApiInput, RawData } from "../interfaces"
 
+
 /**
- * This function is used to get the tree data for the entire prerequisite tree
+ * This function is used to get the tree data for the full tree (all prerequisites)
+ * @param {completed_courses, desired_courses}: ApiInput - Input for the Flask API Call, 
+ * completed_courses is an array of strings of completed courses, desired_courses is an array of strings of desired courses
+ * @returns RawData | { error: string } - The raw data from the Flask API Call, 500 Server error if the API call fails, or an error message if there was all empty lists provided
  */
-export async function get_full_tree_data({completed_courses, desired_courses}: ApiInput):Promise<RawData | { error: string }> {
+export async function getFullTreeData({completed_courses, desired_courses}: ApiInput): Promise<RawData | { error: string }> {
     if (completed_courses.length === 0 && desired_courses.length === 0) {
         return {
             "error": "No courses provided"
@@ -34,10 +38,16 @@ export async function get_full_tree_data({completed_courses, desired_courses}: A
 
     return res.json()
 }
+
+
 /**
- * This function is used to get the tree data for first level (as in direct) prerequisites
+ * This function is used to get the tree data for the simple tree (only the prerequisites for the desired courses)
+ * @param {completed_courses, desired_courses}: ApiInput - Input for the Flask API Call, 
+ * @returns RawData | { error: string }
+ * 
+ * Note: Similar behaviour to getFullTreeData, but the tree_choice is "simple" instead of "full"
  */
-export async function get_simple_tree_data({completed_courses, desired_courses}: ApiInput): Promise<RawData | { error: string }> {
+export async function getSimpleTreeData({completed_courses, desired_courses}: ApiInput): Promise<RawData | { error: string }> {
     if (completed_courses.length === 0 && desired_courses.length === 0) {
         return {
             "error": "No courses provided"

@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 
-import MainLeftBar from "./main_left_bar";
-import BottomBar from "./bottom_bar";
+import MainLeftBar from "./MainLeftBar";
+import BottomBar from "./BottomBar";
 import { Tree, TreeNode } from 'react-organizational-chart';
 import styled from 'styled-components';
 
@@ -16,7 +16,8 @@ import {
   CommonalityLegendInformation
 } from "./interfaces";
 
-import { determineStyle, create_color_labels } from "./utils";
+import { determineStyle, createColorLabels } from "./utils";
+
 
 export default function MainPage() {
   const [treeData, setTreeData] = useState<RawData>();
@@ -63,10 +64,13 @@ export default function MainPage() {
     }))
   }
 
-
+  /**
+   * This function sets the Commonality Legend information for the left bar, and sets the commonality colors for the tree nodes. 
+   * @param data - The raw data from the Flask API Call
+   */
   function settingColors(data: RawData): void {
     const commonality_list = data.commonality.commonality_list
-    const {course_to_color, group_to_color} = create_color_labels(commonality_list)
+    const {course_to_color, group_to_color} = createColorLabels(commonality_list)
     
     // Set colors for tree nodes state
     setCommonNodeColors(course_to_color)
@@ -76,6 +80,11 @@ export default function MainPage() {
   }
   
 
+  /**
+   * This function converts the raw data from the Flask API Call to a JSX element for a course tree(s)
+   * @param data - The raw data from the Flask API Call
+   * @returns A JSX element for a course tree(s)
+   */
   function convertDataToJSX(data: RawData): JSX.Element {
     const arr = data.course_trees
     let list_of_elements = []
