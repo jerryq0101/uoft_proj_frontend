@@ -47,6 +47,23 @@ DEMO VIDEO WITH THUMBNAIL
 
 ### Project Structure
 
-Refactor code and then write this part
+```
+└── uoft_proj_frontend/
+    └── src/
+        └── app/
+            ├── server-actions/
+            │   └── actions.tsx
+            ├── BottomBar.tsx
+            ├── MainLeftBar.tsx
+            ├── MainPage.tsx
+            └── ...
+    └── files/
+        └── focus_reqs.ts
+```
 
+- `MainPage.tsx`: renders the tree and is the main component responding to the left bar's inputs
 
+- `MainLeftBar.tsx`: handles inputs, directs data fetching, and changes data states in `MainPage.tsx`
+- `BottomBar.tsx`: formats the focus information from `focus_reqs.ts`
+- `actions.tsx`: is a Next.js server actions file  with functions that fetches prereq tree data from the live Flask API
+- `focus_reqs.ts`: is a storage of CS Focus requirements in variables
