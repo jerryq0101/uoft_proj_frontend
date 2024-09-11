@@ -225,7 +225,7 @@ export default function MainPage() {
               ¹Data from <a href="https://artsci.calendar.utoronto.ca/section/Computer-Science" target="_blank">University of Toronto</a>
             </div>
             <div className="absolute bottom-2 right-2 text-xs text-gray-700">
-              ²Made by <a href="https://github.com/jerryq0101" target="_blank">jerryq0101</a>
+              ²Made by <a href="" target="_blank">jerry</a>
             </div>
           </div>
       </div>
