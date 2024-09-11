@@ -16,7 +16,7 @@
 - Display common prerequisite courses between different prerequisite trees
 - View Focus requirements for Computer Science majors
 
-#### DEMO BELOW 👇👇👇
+### DEMO BELOW 👇👇👇
 <a href="https://www.loom.com/share/eb36ca35833e4d8d8d2c9bfcde9f4ceb" target="_blank">
   <img src="./public/demo_thumb.png" alt="VIDEO DEMO">
 </a>

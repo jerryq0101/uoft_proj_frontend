@@ -209,7 +209,9 @@ export default function MainLeftBar({groupToColor, setTreeData, showCompleted, s
                                 <p>&quot;Build Tree&quot; builds the direct prerequisite tree of a course(s). 
                                     &quot;Build Full Tree&quot; builds the entire prerequisite tree of a course(s).
                                 </p>
-                                <p>Here's a demo</p>
+                                <p>
+                                    Here&apos;s a <a href="https://www.loom.com/share/eb36ca35833e4d8d8d2c9bfcde9f4ceb?sid=ec44a681-6445-44ee-8f62-e7b25f4d1063" target="_blank" style={{ textDecoration: 'underline', color: "#3b82f6"}}>demo</a>
+                                </p>
                             </div>
                         </div>
                         {/* Course collection field */}
