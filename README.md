@@ -6,7 +6,8 @@
 
 ### Backend Parts
 
-- 
+- [Backend Server and Algorithms processing for the application](https://github.com/jerryq0101/uoft_proj_api)
+- [Scripts to scrape UofT Course Pages](https://github.com/jerryq0101/uoft_proj_data_collect)
 
 ### Features
 
@@ -15,7 +16,10 @@
 - Display common prerequisite courses between different prerequisite trees
 - View Focus requirements for Computer Science majors
 
-DEMO VIDEO WITH THUMBNAIL
+#### CLICK IMG FOR DEMO
+<a href="https://www.loom.com/share/eb36ca35833e4d8d8d2c9bfcde9f4ceb" target="_blank">
+  <img src="./public/Demo%20Thumbnail.png" alt="VIDEO DEMO">
+</a>
 
 ### Get Started
 
