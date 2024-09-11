@@ -221,11 +221,14 @@ export default function MainPage() {
                   {treeData && convertDataToJSX(treeData)}
               </div>
             <BottomBar isLeftBarOpen={leftBarIsOpen} />
-            <div className="absolute bottom-6 right-2 text-xs text-gray-700">
+            <div className="absolute bottom-10 right-2 text-xs text-gray-700">
               ¹Data from <a href="https://artsci.calendar.utoronto.ca/section/Computer-Science" target="_blank">University of Toronto</a>
             </div>
+            <div className="absolute bottom-6 right-2 text-xs text-gray-700">
+              ²Only complete coverage for CS Majors (Adding more soon)
+            </div>
             <div className="absolute bottom-2 right-2 text-xs text-gray-700">
-              ²Made by <a href="" target="_blank">jerry</a>
+              ³Made by jerry
             </div>
           </div>
       </div>
