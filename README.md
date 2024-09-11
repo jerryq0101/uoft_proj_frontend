@@ -6,7 +6,7 @@
 
 ### Backend Parts
 
-- [Backend Server and Algorithms processing for the application](https://github.com/jerryq0101/uoft_proj_api)
+- [Backend API and queries processing](https://github.com/jerryq0101/uoft_proj_api)
 - [Scripts to scrape UofT Course Pages](https://github.com/jerryq0101/uoft_proj_data_collect)
 
 ### Features
