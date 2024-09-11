@@ -132,7 +132,7 @@ export default function MainLeftBar({groupToColor, setTreeData, showCompleted, s
      * Gets data from the Flask API for the full tree
      * @returns the data (RawData) if successful, otherwise an error message
      */
-    async function get_data(): Promise<RawData | { error: string }> {
+    async function getData(): Promise<RawData | { error: string }> {
         const completedCourseNames = completed_courses.map(course => course.name);
         const desiredCourseNames = desiredCourses.map(course => course.name);
         const data = await getFullTreeData({completed_courses: completedCourseNames, desired_courses: desiredCourseNames});
@@ -143,7 +143,7 @@ export default function MainLeftBar({groupToColor, setTreeData, showCompleted, s
      * Gets data from the Flask API for the direct prerequisite tree
      * @returns the data (RawData) if successful, otherwise an error message
      */
-    async function get_simple_data(): Promise<RawData | { error: string }> {
+    async function getSimpleData(): Promise<RawData | { error: string }> {
         const completedCourseNames = completed_courses.map(course => course.name);
         const desiredCourseNames = desiredCourses.map(course => course.name);
         const data = await getSimpleTreeData({completed_courses: completedCourseNames, desired_courses: desiredCourseNames});
@@ -155,12 +155,12 @@ export default function MainLeftBar({groupToColor, setTreeData, showCompleted, s
      * sets course tree data in the parent (MainPage) component for the tree visualization to occur.
      * @returns void
      */
-    async function handle_full_tree_btn_click(): Promise<void> {
+    async function handleFullTreeBtnClick(): Promise<void> {
         // Takes in data from the form
 
         setLoading(true)
 
-        const data: RawData | { error: string } = await get_data()
+        const data: RawData | { error: string } = await getData()
         // const processed_data = convert_data_to_visualization(data)
         if ("error" in data) {
             setLoading(false)
@@ -169,16 +169,18 @@ export default function MainLeftBar({groupToColor, setTreeData, showCompleted, s
         }
         setLoading(false)
     }
+    console.log("groupToColor", groupToColor)
+    console
 
     /**
      * Handles the simple tree button click event
      * sets course tree data in the parent (MainPage) component for the tree visualization to occur.
      * @returns void
      */
-    async function handle_simple_tree_btn_click(): Promise<void> {
+    async function handleSimpleTreeBtnClick(): Promise<void> {
         setLoading(true)
 
-        const data: RawData | { error: string } = await get_simple_data()
+        const data: RawData | { error: string } = await getSimpleData()
         
         if ("error" in data) {
             setLoading(false)
@@ -204,8 +206,10 @@ export default function MainLeftBar({groupToColor, setTreeData, showCompleted, s
                         <div className="flex flex-col gap-3">
                             <h1>Prerequisite Tree Visualizer (UofT)</h1>
                             <div className="flex flex-col gap-2">
-                                <p>Notes: &quot;Build Tree&quot; builds the direct prerequisite tree of a course(s). &quot;Build Full Tree&quot; builds the entire prerequisite tree of a course(s) (i.e. including all the courses that are prerequisites for those courses, and so on...). Currently only covers the CS department entirely.</p>
-                                <p>Made by jerryq0101</p>
+                                <p>&quot;Build Tree&quot; builds the direct prerequisite tree of a course(s). 
+                                    &quot;Build Full Tree&quot; builds the entire prerequisite tree of a course(s).
+                                </p>
+                                <p>Here's a demo</p>
                             </div>
                         </div>
                         {/* Course collection field */}
@@ -291,7 +295,7 @@ export default function MainLeftBar({groupToColor, setTreeData, showCompleted, s
                             <Button 
                                 isLoading={loading} 
                                 onClick={() => {
-                                    handle_simple_tree_btn_click()
+                                    handleSimpleTreeBtnClick()
                                 }} 
                                 loadingText='Building Tree' 
                                 colorScheme='green' 
@@ -304,7 +308,7 @@ export default function MainLeftBar({groupToColor, setTreeData, showCompleted, s
                             <Button 
                                 isLoading={loading}
                                 onClick={() => {
-                                    handle_full_tree_btn_click()
+                                    handleFullTreeBtnClick()
                                 }} 
                                 loadingText='Building Tree' 
                                 colorScheme='green' 

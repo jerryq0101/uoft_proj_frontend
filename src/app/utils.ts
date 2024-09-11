@@ -116,14 +116,13 @@ export function determineStyle(node: CourseTree, showCompleted: boolean): {Style
           ${showCompleted ? "border: 3px solid #ECC94B;" : "border: 3px solid green;"}
           cursor: pointer;
         `;
-
+        
       } 
       if (node.marked) {
-        StyledNode = styled.div`
+        JunctionNode = styled.div`
           padding: 5px;
-          border-radius: 5px;
           display: inline-block;
-          ${showCompleted && "border: 3px solid green;"}
+          ${showCompleted ? "border: 3px solid green;" : "border: 3px solid red;"}
           cursor: pointer;
         `;
       }

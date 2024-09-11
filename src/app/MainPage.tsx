@@ -49,6 +49,7 @@ export default function MainPage() {
     if (treeData) {
       settingColors(treeData)
     }
+    console.log("Tree Data: ", treeData)
   }, [treeData])
 
   
@@ -92,7 +93,7 @@ export default function MainPage() {
     // to separate out the first node from the rest of the nodes
     if (arr && arr.length > 0 ) {
       for (let i = 0; i < arr.length; i++) {
-        const { code, children } = arr[i]
+        const { label, code, children } = arr[i]
 
         // No Children Nodes
         if (!Array.isArray(children)) {
@@ -122,8 +123,9 @@ export default function MainPage() {
         // Has Children Nodes
         else {
           const first_children = children[0]
-          const {StyledNode} = determineStyle(arr[i], showCompleted)
+          const {StyledNode, JunctionNode} = determineStyle(arr[i], showCompleted)
 
+          const Element = label === "Course" ? StyledNode : JunctionNode
           // Find list of containment and render the list
           let node_contains: string[] = []
           if (data.commonality.containment_dict) {
@@ -140,11 +142,11 @@ export default function MainPage() {
             lineColor={'black'}
             lineBorderRadius={'10px'}
             label={
-              <StyledNode
+              <Element
                 className={`${commonNodeColors && toggleCommonality ? commonNodeColors[code] : ""}`}
               >
                 {code} {node_contains.length > 0 ? `contains ${node_contains}`: ""}
-              </StyledNode>
+              </Element>
             }
           >
             {processNode(first_children)}
@@ -209,7 +211,7 @@ export default function MainPage() {
     <main className="flex min-h-screen flex-col items-center justify-between bg-">
       <MainLeftBar 
         groupToColor={legendInformation} setTreeData={setTreeData} setLeftBarIsOpen={setLeftBarIsOpen} showCompleted={showCompleted} setShowCompleted={setShowCompleted}
-        toggle_commonality={toggleCommonality} setToggleCommonality={setToggleCommonality}
+        toggleCommonality={toggleCommonality} setToggleCommonality={setToggleCommonality}
       />
       
       {/* Make this component align from the right of the screen */}
