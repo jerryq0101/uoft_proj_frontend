@@ -20,7 +20,7 @@ import { determineStyle, createColorLabels } from "./utils";
 
 
 export default function MainPage() {
-  const [treeData, setTreeData] = useState<RawData>();
+  const [treeData, setTreeData] = useState<RawData | undefined>(undefined);
   
   // Variables associated with the left bar
   const [showCompleted, setShowCompleted] = useState(false)
