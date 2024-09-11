@@ -294,7 +294,7 @@ export default function MainLeftBar({groupToColor, setTreeData, showCompleted, s
                                 </div>
                             </div>
 
-                            {/* <Button 
+                            <Button 
                                 isLoading={loading} 
                                 onClick={() => {
                                     handleSimpleTreeBtnClick()
@@ -305,7 +305,7 @@ export default function MainLeftBar({groupToColor, setTreeData, showCompleted, s
                                 className="px-5 mr-auto"
                             >
                                 🌳 Build Tree
-                            </Button> */}
+                            </Button>
 
                             <Button 
                                 isLoading={loading}

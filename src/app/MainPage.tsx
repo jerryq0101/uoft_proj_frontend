@@ -220,7 +220,10 @@ export default function MainPage() {
               <div className="z-10 pt-5">
                   {treeData && convertDataToJSX(treeData)}
               </div>
-          <BottomBar isLeftBarOpen={leftBarIsOpen} />
+            <BottomBar isLeftBarOpen={leftBarIsOpen} />
+            <div className="absolute bottom-2 right-2 text-xs text-gray-700">
+              ¹Data from University of Toronto
+            </div>          
           </div>
       </div>
     </main>
